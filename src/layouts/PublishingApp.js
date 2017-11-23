@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addArticles } from '../actions/article';
+import falcorModel from '../falcorModel';
 
 class PublishingApp extends React.Component {
 
@@ -8,10 +9,30 @@ class PublishingApp extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.fetch();
+  }
 
+  async fetch() {
+
+    const { onGetArticles } = this.props;
+
+    const articlesCount = await falcorModel
+      .getValue('articles.length');
+
+    const articles = await falcorModel
+      .get([
+        'articles',
+        {from: 0, to: articlesCount-1},
+        ['id', 'articleTitle', 'articleContent']
+      ])
+      .then((response) => response.json.articles);
+
+    onGetArticles(articles);
+  }
 
   render() {
-    console.log(this.props);
+
     const { articles } = this.props;
 
     const articlesJSX = Object.keys(articles)
@@ -36,9 +57,5 @@ class PublishingApp extends React.Component {
 
 export default connect(
   (state) => ({articles: state}),
-  (dispatch) => {
-    return {
-      onGetArticles: (ariticles) => dispatch(addArticles(ariticles))
-    }
-  }
+  { onGetArticles: addArticles }
 )(PublishingApp)
