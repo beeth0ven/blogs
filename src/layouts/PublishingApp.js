@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { addArticles } from '../actions/article';
 
 class PublishingApp extends React.Component {
 
@@ -7,9 +8,11 @@ class PublishingApp extends React.Component {
     super(props);
   }
 
+
+
   render() {
     console.log(this.props);
-    const { articles, dispatch } = this.props;
+    const { articles } = this.props;
 
     const articlesJSX = Object.keys(articles)
       .map((key) => {
@@ -24,7 +27,7 @@ class PublishingApp extends React.Component {
 
     return (
       <div>
-        <h1>Our publishing app</h1>
+        <h1>(Frontend) Our publishing app</h1>
         {articlesJSX}
       </div>
     )
@@ -33,5 +36,9 @@ class PublishingApp extends React.Component {
 
 export default connect(
   (state) => ({articles: state}),
-  (dispatch) => ({dispatch: {}})
+  (dispatch) => {
+    return {
+      onGetArticles: (ariticles) => dispatch(addArticles(ariticles))
+    }
+  }
 )(PublishingApp)

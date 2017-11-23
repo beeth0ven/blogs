@@ -27,7 +27,7 @@ app.get('/', (request, response) =>
       `<h2>${article.articleTitle}</h2>${article.articleContent}`
     ).join('<br/>');
 
-    response.send(`<h1>Publishing App Initial Application!</h1>${articleTags}`);
+    response.send(`<h1>(Backend) Our publishing app</h1>${articleTags}`);
   })
 );
 
