@@ -1,6 +1,6 @@
 import falcorExpress from 'falcor-express';
 import Router from 'falcor-router';
-import publishingAppRoutes from './routes';
+import publishingAppRoutes from '../routes/routes';
 
 const modelJson = '/model.json';
 const dataSourceRoute = falcorExpress

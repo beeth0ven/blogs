@@ -30379,10 +30379,6 @@
 
 	var _article = __webpack_require__(525);
 
-	var _falcorModel = __webpack_require__(526);
-
-	var _falcorModel2 = _interopRequireDefault(_falcorModel);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -30411,29 +30407,16 @@
 	    key: 'fetch',
 	    value: function () {
 	      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-	        var onGetArticles, articlesCount, articles;
+	        var fetchArticles;
 	        return regeneratorRuntime.wrap(function _callee$(_context) {
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
-	                onGetArticles = this.props.onGetArticles;
-	                _context.next = 3;
-	                return _falcorModel2.default.getValue('articles.length');
+	                fetchArticles = this.props.fetchArticles;
 
-	              case 3:
-	                articlesCount = _context.sent;
-	                _context.next = 6;
-	                return _falcorModel2.default.get(['articles', { from: 0, to: articlesCount - 1 }, ['id', 'articleTitle', 'articleContent']]).then(function (response) {
-	                  return response.json.articles;
-	                });
+	                fetchArticles();
 
-	              case 6:
-	                articles = _context.sent;
-
-
-	                onGetArticles(articles);
-
-	              case 8:
+	              case 2:
 	              case 'end':
 	                return _context.stop();
 	            }
@@ -30489,23 +30472,75 @@
 
 	exports.default = (0, _reactRedux.connect)(function (state) {
 	  return { articles: state };
-	}, { onGetArticles: _article.addArticles })(PublishingApp);
+	}, function (dispatch) {
+	  return {
+	    fetchArticles: function fetchArticles() {
+	      return (0, _article.getArticles)(dispatch);
+	    }
+	  };
+	})(PublishingApp);
 
 /***/ },
 /* 525 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.getArticles = exports.addArticles = undefined;
+
+	var _falcorModel = __webpack_require__(526);
+
+	var _falcorModel2 = _interopRequireDefault(_falcorModel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 	var addArticles = exports.addArticles = function addArticles(articles) {
 	  return {
 	    type: "ADD_ARTICLES",
 	    data: articles
 	  };
 	};
+
+	var getArticles = exports.getArticles = function () {
+	  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
+	    var articlesCount, articles;
+	    return regeneratorRuntime.wrap(function _callee$(_context) {
+	      while (1) {
+	        switch (_context.prev = _context.next) {
+	          case 0:
+	            _context.next = 2;
+	            return _falcorModel2.default.getValue('articles.length');
+
+	          case 2:
+	            articlesCount = _context.sent;
+	            _context.next = 5;
+	            return _falcorModel2.default.get(['articles', { from: 0, to: articlesCount - 1 }, ['id', 'articleTitle', 'articleContent']]).then(function (response) {
+	              return response.json.articles;
+	            });
+
+	          case 5:
+	            articles = _context.sent;
+
+
+	            dispatch(addArticles(articles));
+
+	          case 7:
+	          case 'end':
+	            return _context.stop();
+	        }
+	      }
+	    }, _callee, undefined);
+	  }));
+
+	  return function getArticles(_x) {
+	    return _ref.apply(this, arguments);
+	  };
+	}();
 
 /***/ },
 /* 526 */

@@ -2,13 +2,14 @@ import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { modelJson, dataSourceRoute } from './falcorService';
+import { modelJson, dataSourceRoute } from './services/falcorService';
 
 const app = express();
 app.server = http.createServer(app);
 
 app.use(cors());
 app.use(bodyParser.json({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(modelJson, dataSourceRoute);
 app.use(express.static('dist'));
 

@@ -1,14 +1,8 @@
-import mongoose from 'mongoose';
-mongoose.connect('mongodb://luojiedeMac-Mini.local/local');
-
-const articleSchema = {
-  articleTitle: String,
-  articleContent: String
-};
-
-const Article = mongoose.model('Article', articleSchema, 'articles');
+import sessionRoutes from './sessionRoutes';
+import { Article } from '../services/mongooseService';
 
 const publishingAppRoutes = [
+  ...sessionRoutes,
   {
     route: 'articles.length',
     get: () => Article
