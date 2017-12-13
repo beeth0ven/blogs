@@ -1,7 +1,7 @@
 import sessionRoutes from './sessionRoutes';
 import { Article } from '../services/mongooseService';
 
-const publishingAppRoutes = [
+const appRoutes = [
   ...sessionRoutes,
   {
     route: 'articles.length',
@@ -26,4 +26,4 @@ const publishingAppRoutes = [
   }
 ];
 
-export default publishingAppRoutes;
+export default appRoutes;
