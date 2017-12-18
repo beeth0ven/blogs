@@ -42,7 +42,7 @@ class PublishingApp extends React.Component {
 }
 
 export default connect(
-  (state) => ({articles: state}),
+  (state) => ({articles: state.articles}),
   (dispatch) => ({
     fetchArticles: () => getArticles(dispatch)
   })

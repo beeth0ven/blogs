@@ -1,5 +1,5 @@
 
-const article = (state = {}, action) => {
+const articles = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_ARTICLES':
       return {...action.data};
@@ -8,4 +8,4 @@ const article = (state = {}, action) => {
   }
 };
 
-export default article;
+export default articles;
