@@ -14,12 +14,27 @@ const articleSchema = {
 };
 
 const userSchema = {
-  username: String,
+  username: {
+    type: String,
+    index: {
+      unique: true,
+      dropDups: true
+    }
+  },
   password: String,
   firstName: String,
   lastName: String,
-  email: String,
-  role: String,
+  email: {
+    type: String,
+    index: {
+      unique: true,
+      dropDups: true
+    }
+  },
+  role: {
+    type: String,
+    default: 'editor'
+  },
   verified: Boolean,
   imageUrl: String
 };
