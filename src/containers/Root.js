@@ -4,17 +4,13 @@ import {Router} from "react-router";
 import routes from '../routes';
 import createHashHistory from 'history/lib/createHashHistory';
 
-const noQueryKeyHistory = createHashHistory({
-  queryKey: false
-});
-
 export default class Root extends React.Component {
 
   render() {
     return (
       <Provider store={this.props.store}>
         <div>
-          <Router history={noQueryKeyHistory}>
+          <Router history={this.props.history}>
             {routes}
           </Router>
         </div>

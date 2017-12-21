@@ -1,7 +1,7 @@
 
 export default () => {
   return {
-    "article":
+    "articles":
       {
         "0": {
           "articleTitle": "SERVER-SIDE Lorem ipsum - article one",

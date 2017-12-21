@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
+import themeDecorator from 'material-ui/lib/styles/theme-decorator';
+import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
 
 class CoreLayout extends React.Component {
 
@@ -16,4 +18,5 @@ class CoreLayout extends React.Component {
   }
 }
 
-export default CoreLayout;
+const muiTheme = getMuiTheme(null, { userAgent: 'all' });
+export default themeDecorator(muiTheme)(CoreLayout);

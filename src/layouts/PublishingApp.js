@@ -9,7 +9,9 @@ class PublishingApp extends React.Component {
   }
 
   componentWillMount() {
-    this.fetch();
+    if (typeof window !== 'undefined') {
+      this.fetch();
+    }
   }
 
   async fetch() {
