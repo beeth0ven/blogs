@@ -32,7 +32,7 @@ const objectFromArray = (elements) => elements
 
 export default () => {
   return Article.find({}, (err, articles) => articles)
-    .then((articles) =>  ({
+    .then((articles) => ({
         articles: objectFromArray(articles)
       })
     );

@@ -16,7 +16,12 @@ export const getArticles = async (dispatch) => {
       {from: 0, to: articlesCount-1},
       ['_id', 'articleTitle', 'articleContent']
     ])
-    .then((response) => response.json.articles);
+    .then((response) => {
+      console.log('getArticles response', response);
+      return response.json.articles
+    });
+
+  console.log('getArticles articles', articles);
 
   dispatch(addArticles(articles));
 };

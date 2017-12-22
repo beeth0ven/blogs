@@ -57,8 +57,8 @@ const handler = (req, res, next, store) => (err, redirectLocation, renderProps) 
 
 const handleServerSideRender = async (req, res, next) => {
   try {
-    const initMockStore = await fetchServerSide();
-    const store = createStore(reducers, initMockStore);
+    const initStore = await fetchServerSide();
+    const store = createStore(reducers, initStore);
     const location = hist.createLocation(req.path);
 
     match({
