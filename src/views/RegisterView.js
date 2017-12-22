@@ -40,7 +40,6 @@ class RegisterView extends React.Component {
   render() {
     return (
       <div>
-        <h1>Register</h1>
         <div style={{maxWidth: 450, margin: '0 auto'}}>
           <RegisterForm onSubmit={this.register}/>
         </div>

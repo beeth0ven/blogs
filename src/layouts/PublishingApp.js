@@ -36,7 +36,6 @@ class PublishingApp extends React.Component {
 
     return (
       <div>
-        <h1>(Frontend) Our publishing app</h1>
         {articlesJSX}
       </div>
     )

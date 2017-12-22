@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import { modelJson, dataSourceRoute } from './services/falcorService';
 import {handleServerSideRender} from "./services/renderService";
 
-
 const app = express();
 app.server = http.createServer(app);
 

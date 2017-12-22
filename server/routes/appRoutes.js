@@ -13,7 +13,7 @@ const appRoutes = [
       }))
   },
   {
-    route: 'articles[{integers}]["id","articleTitle","articleContent"]',
+    route: 'articles[{integers}]["_id","articleTitle","articleContent"]',
     get: (pathSet) => {
       const articleIndexes = pathSet[1];
       return Article

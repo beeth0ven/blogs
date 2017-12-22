@@ -14,7 +14,7 @@ export const getArticles = async (dispatch) => {
     .get([
       'articles',
       {from: 0, to: articlesCount-1},
-      ['id', 'articleTitle', 'articleContent']
+      ['_id', 'articleTitle', 'articleContent']
     ])
     .then((response) => response.json.articles);
 

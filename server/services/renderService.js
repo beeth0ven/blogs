@@ -6,7 +6,7 @@ import reducers from '../../src/reducers';
 import routes from '../../src/routes';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {Provider} from "react-redux";
-import fetchServerSide from "../fetchServerSide";
+import fetchServerSide from "./fetchServerSide";
 
 const renderFullHtml = (html, initialState) => {
   return `
@@ -16,7 +16,6 @@ const renderFullHtml = (html, initialState) => {
      <title>Publishing App Server Side Rendering</title>
     </head>
     <body>
-      <h1>Server side publishing app</h1>
       <div id="publishingAppRoot">${html}</div>
       <script>
         window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
@@ -56,9 +55,9 @@ const handler = (req, res, next, store) => (err, redirectLocation, renderProps) 
   }
 };
 
-const handleServerSideRender = (req, res, next) => {
+const handleServerSideRender = async (req, res, next) => {
   try {
-    const initMockStore = fetchServerSide();
+    const initMockStore = await fetchServerSide();
     const store = createStore(reducers, initMockStore);
     const location = hist.createLocation(req.path);
 
