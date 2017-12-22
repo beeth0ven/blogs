@@ -23,9 +23,7 @@ class PublishingApp extends React.Component {
   render() {
 
     const { articles } = this.props;
-    console.log('articles', articles);
     const articlesJSX = Object.keys(articles)
-      // .filter(key => key !== '$__path')
       .map((key) => {
         const article = articles[key];
         return (

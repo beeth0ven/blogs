@@ -17,11 +17,8 @@ export const getArticles = async (dispatch) => {
       ['_id', 'articleTitle', 'articleContent']
     ])
     .then((response) => {
-      console.log('getArticles response', response);
       return response.json.articles
     });
-
-  console.log('getArticles articles', articles);
 
   dispatch(addArticles(articles));
 };
