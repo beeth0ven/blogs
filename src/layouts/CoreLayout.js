@@ -16,6 +16,12 @@ class CoreLayout extends React.Component {
       margin: 5
     };
 
+    const userIsLoggedIn = typeof localStorage !== 'undefined'
+      && localStorage.token
+      && this.props.routes[1].name !== 'logout';
+
+
+
     const homePageButtonJSX = (
       <Link to='/'>
         <RaisedButton label={<ActionHome/>} style={homeIconStyle}/>
