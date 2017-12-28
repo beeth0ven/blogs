@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a2a0a18-6190-41ff-b7a1-88592e592fb4" name="Default" comment="Add LoginView">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dist/styles-draft-js.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/articles/AddArticleView.js" afterPath="$PROJECT_DIR$/src/views/articles/AddArticleView.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/views/articles/WYSIWYGeditor.js" afterPath="$PROJECT_DIR$/src/components/articles/WYSIWYGeditor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Air.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Air.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/services/renderService.js" afterPath="$PROJECT_DIR$/server/services/renderService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes/index.js" afterPath="$PROJECT_DIR$/src/routes/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -53,11 +46,9 @@
       <file leaf-file-name="WYSIWYGeditor.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/articles/WYSIWYGeditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="53" column="41" lean-forward="true" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="120">
+              <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -276,7 +267,7 @@
       <workItem from="1513148683944" duration="14483000" />
       <workItem from="1513739127165" duration="10577000" />
       <workItem from="1513833881063" duration="28758000" />
-      <workItem from="1514349459397" duration="21862000" />
+      <workItem from="1514349459397" duration="22159000" />
     </task>
     <task id="LOCAL-00001" summary="Add LoginView">
       <created>1513661340488</created>
@@ -289,7 +280,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="159430000" />
+    <option name="totallyTimeSpent" value="159727000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="937" height="1080" extended-state="6" />
@@ -748,11 +739,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/articles/WYSIWYGeditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="53" column="41" lean-forward="true" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="8" column="16" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
