@@ -20,21 +20,20 @@ class PublishingApp extends React.Component {
     fetchArticles()
   }
 
+  articleJSX = (key, article) => (
+    <div key={key}>
+      <ArticleCard
+        title={article.articleTitle}
+        content={article.articleContent}
+      />
+    </div>
+  );
+
   render() {
 
     const { articles } = this.props;
     const articlesJSX = Object.keys(articles)
-      .map((key) => {
-        const article = articles[key];
-        return (
-          <div key={key}>
-            <ArticleCard
-              title={article.articleTitle}
-              content={article.articleContent}
-            />
-          </div>
-        )
-      });
+      .map((key) => this.articleJSX(key, articles[key]));
 
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>

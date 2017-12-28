@@ -12,9 +12,9 @@ export default (
   <Route component={CoreLayout} path='/'>
     <IndexRoute component={PublishingApp} name='home'/>
     <Route component={LoginView} path='login' name='login'/>
-    <Route component={LogoutView} path='logout'/>
+    <Route component={LogoutView} path='logout' name='logout'/>
     <Route component={DashboardView} path='dashboard' name='dashboard'/>
     <Route component={RegisterView} path='register' name='register'/>
-    <Route component={AddArticleView} path='addarticle'/>
+    <Route component={AddArticleView} path='add-article' name='add-article'/>
   </Route>
 )

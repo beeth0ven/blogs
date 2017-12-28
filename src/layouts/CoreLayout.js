@@ -7,44 +7,60 @@ import ActionHome from "material-ui/lib/svg-icons/action/home";
 
 class CoreLayout extends React.Component {
 
-  render() {
-    const homeIconStyle = {
+  style = {
+    homeIcon: {
       margin: 5,
       padding: 5
-    };
-    const buttonStyle = {
+    },
+    button: {
       margin: 5
-    };
+    }
+  };
 
-    const userIsLoggedIn = typeof localStorage !== 'undefined'
-      && localStorage.token
-      && this.props.routes[1].name !== 'logout';
+  homePageButtonJSX = () => (
+    <Link to='/'>
+      <RaisedButton label={<ActionHome/>} style={this.style.homeIcon}/>
+    </Link>
+  );
 
-
-
-    const homePageButtonJSX = (
-      <Link to='/'>
-        <RaisedButton label={<ActionHome/>} style={homeIconStyle}/>
+  loggedInMenuLinksJSX = () => (
+    <span>
+      <Link to='/dashboard'>
+        <RaisedButton label='Dashboard' style={this.style.button}/>
       </Link>
-    );
+      <Link to='/logout'>
+        <RaisedButton label='Logout' style={this.style.button}/>
+      </Link>
+    </span>
+  );
 
-    const menuLinksJSX = (
-      <span>
-        <Link to='/register'>
-          <RaisedButton label='Register' style={buttonStyle}/>
-        </Link>
-        <Link to='Login'>
-          <RaisedButton label='Login' style={buttonStyle}/>
-        </Link>
-      </span>
-    );
+  loggedOutMenuLinksJSX = () => (
+    <span>
+      <Link to='/register'>
+        <RaisedButton label='Register' style={this.style.button}/>
+      </Link>
+      <Link to='/login'>
+        <RaisedButton label='Login' style={this.style.button}/>
+      </Link>
+    </span>
+  );
+
+  userIsLoggedIn = () => typeof localStorage !== 'undefined'
+    && localStorage.token
+    && this.props.routes[1].name !== 'logout';
+
+  menuLinksJSX = () => this.userIsLoggedIn()
+    ? this.loggedInMenuLinksJSX()
+    : this.loggedOutMenuLinksJSX();
+
+  render() {
 
     return (
       <div>
         <AppBar
           title='Publishing App'
-          iconElementLeft={homePageButtonJSX}
-          iconElementRight={menuLinksJSX}
+          iconElementLeft={this.homePageButtonJSX()}
+          iconElementRight={this.menuLinksJSX()}
         />
         <br/>
         {this.props.children}
