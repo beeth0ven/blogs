@@ -6,7 +6,7 @@ import LoginView from '../views/LoginView';
 import DashboardView from "../views/DashboardView";
 import RegisterView from "../views/RegisterView";
 import LogoutView from "../views/LogoutView";
-import AddArticleView from "../components/articles/AddArticleView";
+import AddArticleView from "../views/articles/AddArticleView";
 
 export default (
   <Route component={CoreLayout} path='/'>
