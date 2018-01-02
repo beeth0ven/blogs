@@ -5,6 +5,11 @@ export const addArticles = (articles) => ({
   data: articles
 });
 
+export const newArticle = (article) => ({
+  type: 'NEW_ARTICLE',
+  data: article
+});
+
 export const getArticles = async (dispatch) => {
 
   const articlesCount = await falcorModel
@@ -22,3 +27,4 @@ export const getArticles = async (dispatch) => {
 
   dispatch(addArticles(articles));
 };
+

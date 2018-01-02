@@ -7,6 +7,7 @@ import {
   convertToRaw,
   convertFromRaw
 } from 'draft-js'
+import {BlockStyleControls, InlineStyleControls} from "./wysiwyg/WYSIWYGbuttons";
 
 class WYSIWYGeditor extends React.Component {
 
@@ -43,6 +44,24 @@ class WYSIWYGeditor extends React.Component {
     return false;
   };
 
+  toggleBlockType = (blockType) => {
+    this.onChange(
+      RichUtils.toggleBlockType(
+        this.state.editorState,
+        blockType
+      )
+    )
+  };
+
+  toggleInlineStyle = (inlineStyle) => {
+    this.onChange(
+      RichUtils.toggleInlineStyle(
+        this.state.editorState,
+        inlineStyle
+      )
+    )
+  };
+
   render() {
     const { editorState } = this.state;
     const className = 'RichEditor-editor';
@@ -52,6 +71,16 @@ class WYSIWYGeditor extends React.Component {
       <div>
         <h4>{this.props.title}</h4>
         <div className='RichEditor-root'>
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={this.toggleBlockType}
+          />
+
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={this.toggleInlineStyle}
+          />
+
           <div className={className} onClick={this.focus}>
             <Editor
               editorState={editorState}
