@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getArticles } from '../actions/article';
 import ArticleCard from "../components/ArticleCard";
+import {mapMap} from "../internal/MapExtension";
 
 class PublishingApp extends React.Component {
 
@@ -20,23 +21,22 @@ class PublishingApp extends React.Component {
     fetchArticles()
   }
 
+  articleJSX = (key, article) => (
+    <div key={key}>
+      <ArticleCard
+        title={article.articleTitle}
+        content={article.articleContent}
+      />
+    </div>
+  );
+
   render() {
 
     const { articles } = this.props;
-    console.log('articles', articles);
-    const articlesJSX = Object.keys(articles)
-      // .filter(key => key !== '$__path')
-      .map((key) => {
-        const article = articles[key];
-        return (
-          <div key={key}>
-            <ArticleCard
-              title={article.articleTitle}
-              content={article.articleContent}
-            />
-          </div>
-        )
-      });
+    const articlesJSX = mapMap(
+      articles,
+      (key, article) => this.articleJSX(key, article)
+    );
 
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>

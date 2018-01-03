@@ -1,39 +1,16 @@
 
 import {Article} from "./mongooseService";
 
-/**
-Convert an array to object.
- This method will change this:
-
- ```
- [
-   'element0',
-   'element1',
-   'element2',
- ]
- ```
-
- to this:
-
- ```
- {
-  '0': 'element0',
-  '1': 'element1',
-  '2': 'element2',
- }
- ```
-
-*/
-const objectFromArray = (elements) => elements
-  .reduce((accumulator, element, index) => ({
+const articlesById = (articles) => articles
+  .reduce((accumulator, article) => new Map([
     ...accumulator,
-    [index]: element.toObject()
-  }), {});
+    [article._id, article.toObject()]
+  ]), new Map());
 
 export default () => {
   return Article.find({}, (err, articles) => articles)
     .then((articles) => ({
-        articles: objectFromArray(articles)
+        articles: articlesById(articles)
       })
     );
 }

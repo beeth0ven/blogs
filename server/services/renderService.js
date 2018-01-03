@@ -14,6 +14,7 @@ const renderFullHtml = (html, initialState) => {
   <html>
     <head>
      <title>Publishing App Server Side Rendering</title>
+     <link rel="stylesheet" type="text/css" href="/static/styles-draft-js.css"/>
     </head>
     <body>
       <div id="publishingAppRoot">${html}</div>
