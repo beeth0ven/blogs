@@ -4,27 +4,32 @@ import RaisedButton from "material-ui/lib/raised-button";
 import List from "material-ui/lib/lists/list";
 import ListItem from "material-ui/lib/lists/list-item";
 import {Link} from "react-router";
+import {mapMap} from "../internal/MapExtension";
 
 class DashboardView extends React.Component {
 
   articleJSX = (key, article) => (
-    <ListItem
-      key={key}
-      leftAvatar={<img
-        src='/static/placeholder.png'
-        width='50'
-        height='50'
+    <Link to={`/edit-article/${article['_id']}`}
+          key={key}>
+      <ListItem
+        leftAvatar={<img
+          src='/static/placeholder.png'
+          width='50'
+          height='50'
         />}
-      primaryText={article.articleTitle}
-      secondaryText={article.articleContent}
-    />
+        primaryText={article.articleTitle}
+        secondaryText={article.articleContent}
+      />
+    </Link>
   );
 
   render() {
 
     const { articles } = this.props;
-    const articlesJSX = Object.keys(articles)
-      .map(key => this.articleJSX(key, articles[key]));
+    const articlesJSX = mapMap(
+      articles,
+      (key, article) => this.articleJSX(key, article)
+      );
 
     return (
       <div style={{height: '100%', width: '75%', margin: 'auto'}}>

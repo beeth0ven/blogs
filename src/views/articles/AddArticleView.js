@@ -2,14 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import WYSIWYGeditor from "../../components/articles/WYSIWYGeditor";
 import { stateToHTML } from 'draft-js-export-html';
+import {newArticle} from "../../actions/article";
+import {Link} from "react-router";
+import {RaisedButton} from "material-ui";
 
 class AddArticleView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      title: 'test',
       contentJSON: {},
-      htmlContent: ''
+      htmlContent: '',
+      newArticleID: null
     };
   }
 
@@ -18,14 +23,56 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   };
 
+  onSubmit = () => {
+
+    const newArticleID = 'MOCKEDRandomID' + Math.floor(Math.random() * 10000);
+    const newArticle = {
+      _id: newArticleID,
+      articleTitle: this.state.title,
+      articleContent: this.state.htmlContent,
+      articleContentJSON: this.state.contentJSON
+    };
+
+    this.props.newArticle(newArticle);
+    this.setState({newArticleID});
+  };
+
   render() {
+
+    const styles = {
+      rootDiv: {height: '100%', width: '75%', margin: 'auto'},
+      raisedButton: {margin: '10px auto', display: 'block', width: 150}
+    };
+
+    if (this.state.newArticleID) {
+      return (
+        <div style={styles.rootDiv}>
+          <h3>Your new article ID is {this.state.newArticleID}</h3>
+          <Link to='/dashboard'>
+            <RaisedButton
+              secondary={true}
+              type='submit'
+              style={styles.raisedButton}
+              label='Done'
+            />
+          </Link>
+        </div>
+      )
+    }
+
     return (
-      <div style={{height: '100%', width: '75%', margin: 'auto'}}>
+      <div style={styles.rootDiv}>
         <h1>Add Article</h1>
         <WYSIWYGeditor
-          initialValue=''
-          title='Create an article'
+          name='addarticle'
           onChangeTextJSON={this.onDraftJSChange}
+        />
+        <RaisedButton
+          onClick={this.onSubmit}
+          secondary={true}
+          type='submit'
+          style={styles.raisedButton}
+          label='Submit Article'
         />
       </div>
     )
@@ -34,5 +81,5 @@ class AddArticleView extends React.Component {
 
 export default connect(
   state => ({...state}),
-  dispatch => ({})
+  { newArticle }
 )(AddArticleView)

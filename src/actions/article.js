@@ -10,6 +10,16 @@ export const newArticle = (article) => ({
   data: article
 });
 
+export const editArticle = (article) => ({
+  type: 'EDIT_ARTICLE',
+  data: article
+});
+
+export const deleteArticle = (id) => ({
+  type: 'DELETE_ARTICLE',
+  data: id
+});
+
 export const getArticles = async (dispatch) => {
 
   const articlesCount = await falcorModel

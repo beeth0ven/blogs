@@ -1,4 +1,6 @@
 
+import {deletedMap} from "../internal/MapExtension";
+
 const articlesById = (responseArticles) => Object.keys(responseArticles)
   .reduce((accumulator, key) => {
     const article = responseArticles[key];
@@ -17,11 +19,20 @@ const articles = (state = new Map(), action) => {
         ...articlesMap
       ]);
     case 'NEW_ARTICLE':
-      const article = action.data;
+      const newArticle = action.data;
       return new Map([
         ...state,
-        [article._id, article]
+        [newArticle._id, newArticle]
       ]);
+    case 'EDIT_ARTICLE':
+      const editedArticle = action.data;
+      return new Map([
+        ...state,
+        [editedArticle._id, editedArticle]
+      ]);
+    case 'DELETE_ARTICLE':
+      const deletedArticleID = action.data;
+      return deletedMap(state, deletedArticleID);
     default:
       return state;
   }

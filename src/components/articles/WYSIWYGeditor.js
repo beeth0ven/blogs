@@ -14,8 +14,28 @@ class WYSIWYGeditor extends React.Component {
   constructor(props) {
     super(props);
 
-    const initialEditorFromProps = EditorState
-      .createWithContent(ContentState.createFromText(''));
+    const { initialValue } = props;
+
+    let initialEditorFromProps;
+
+    const notHasInitialValue = typeof initialValue === 'undefined'
+      || typeof initialValue !== 'object';
+    if (notHasInitialValue) {
+      initialEditorFromProps = EditorState
+        .createWithContent(ContentState.createFromText(''));
+    } else {
+      const isInvalidObject = typeof initialValue.entityMap === 'undefined'
+        || typeof initialValue.blocks === 'undefined';
+
+      if (isInvalidObject) {
+        alert('Invalid article-edit error provided, exit');
+        return;
+      }
+
+      const draftBlocks = convertFromRaw(initialValue);
+      const contentToConsume = ContentState.createFromBlockArray(draftBlocks);
+      initialEditorFromProps = EditorState.createWithContent(contentToConsume);
+    }
 
     this.state = {
       editorState: initialEditorFromProps
