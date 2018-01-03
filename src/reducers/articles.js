@@ -1,26 +1,27 @@
 
-const articleById = (article) => ({ [article._id]: article });
-
 const articlesById = (responseArticles) => Object.keys(responseArticles)
   .reduce((accumulator, key) => {
-    const articleObject = articleById(responseArticles[key]);
-    return { ...accumulator, ...articleObject };
-  }, {});
+    const article = responseArticles[key];
+    return new Map([
+      ...accumulator,
+      [article._id, article]
+    ])}, new Map());
 
-const deleteArticle = (articles, id) => {
-  let newArticles = Object.assign(articles);
-  delete newArticles[id];
-  return newArticles;
-};
-
-const articles = (state = {}, action) => {
+const articles = (state = new Map(), action) => {
+  console.log('articles.action', action);
   switch (action.type) {
     case 'ADD_ARTICLES':
-      const articleObjects = articlesById(action.data);
-      return { ...state, ...articleObjects };
+      const articlesMap = articlesById(action.data);
+      return new Map([
+        ...state,
+        ...articlesMap
+      ]);
     case 'NEW_ARTICLE':
-      const articleObject = articleById(action.data);
-      return { ...state, ...articleObject };
+      const article = action.data;
+      return new Map([
+        ...state,
+        [article._id, article]
+      ]);
     default:
       return state;
   }
