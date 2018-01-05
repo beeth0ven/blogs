@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
 const conf = {
   hostname: process.env.MONGO_HOSTNAME || 'luojiedeMac-Mini.local',
@@ -8,10 +9,16 @@ const conf = {
 
 mongoose.connect(`mongodb://${conf.hostname}/${conf.env}`);
 
-const articleSchema = {
-  articleTitle: String,
-  articleContent: String
-};
+const articleSchema = new Schema(
+  {
+    articleTitle: String,
+    articleContent: String,
+    articleContentJSON: Object
+  },
+  {
+    minimize: false
+  }
+);
 
 const userSchema = {
   username: {
