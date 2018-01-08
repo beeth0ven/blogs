@@ -16,4 +16,9 @@ const createToken = (username, role) => {
   return jwt.sign(userDetailsToHash, jwtSecret.secret);
 };
 
-export {createSaltedPassHash, createToken};
+const validToken = (token, username, role) => {
+  const authSignToken = createToken(username, role);
+  return authSignToken === token;
+};
+
+export {createSaltedPassHash, createToken, validToken};

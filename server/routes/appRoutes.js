@@ -1,10 +1,11 @@
 import sessionRoutes from './sessionRoutes';
 import { Article } from '../services/mongooseService';
 import jsonGraph from 'falcor-json-graph';
-import {createToken} from "../internal/jwt/index";
+import {createToken, validToken} from "../internal/jwt/index";
 
 let $atom = jsonGraph.atom;
 let $ref = jsonGraph.ref;
+let $error = jsonGraph.error;
 
 const atomArticleContentJSON = (articleObject) => {
   if (typeof articleObject.articleContentJSON !== 'undefined') {
@@ -14,8 +15,7 @@ const atomArticleContentJSON = (articleObject) => {
 
 export default (req, res) => {
   const { token, role, username } = req.headers;
-  const authSignToken = createToken(username, role);
-  const isAuthorized = authSignToken === token;
+  const isAuthorized = validToken(token, role, username);
   const sessionObject = {isAuthorized, role, username};
 
   console.info(`The ${username} is authorized === `, isAuthorized);
@@ -71,18 +71,18 @@ export default (req, res) => {
         const articleObject = args[0];
         let article = new Article(articleObject);
 
-        return article.save((error, data) => {
+        return article.save((error, article) => {
           if (error) {
             console.info('ERROR', error);
             return error;
           } else {
-            return data;
+            return article;
           }
-        }).then((data) =>
+        }).then((article) =>
           Article.count({}, (error, count) => {})
-            .then((count) => ({ count, data }))
+            .then((count) => ({ count, article }))
         ).then((res) => {
-          const articleObject = res.data.toObject();
+          const articleObject = res.article.toObject();
           const articleID = articleObject['_id'];
           const articleRef = $ref(['articlesByID', articleID]);
           return [
@@ -91,7 +91,7 @@ export default (req, res) => {
               value: articleRef
             },
             {
-              path: ['articles', 'articleID'],
+              path: ['articles', 'newArticleID'],
               value: String(articleID)
             },
             {
@@ -100,6 +100,49 @@ export default (req, res) => {
             }
           ];
         })
+      }
+    },
+    {
+      route: 'articles.update',
+      call: async (callPath, args) => {
+        const articleObject = args[0];
+        const articleID = articleObject['_id'];
+        let article = new Article(articleObject);
+        article.isNew = false;
+
+        return article.save((error, article) => {
+          if (error) {
+            console.info('ERROR', error);
+            return error;
+          }
+        }).then((error, article) => {
+          return [
+            {
+              path: ['articlesByID', articleID],
+              value: articleObject
+            },
+            {
+              path: ['articlesByID', articleID],
+              invalidate: true
+            }
+          ]
+        })
+      }
+    },
+    {
+      route: 'articles.delete',
+      call: (callPath, args) => {
+        const articleID = args[0];
+        return Article.find({ '_id': articleID })
+          .remove((error) => {
+            if (error) {
+              console.info('ERROR', error);
+              return error;
+            }
+          }).then((res) => ({
+              path: ['articlesByID', articleID],
+              invalidate: true
+          }))
       }
     }
   ];

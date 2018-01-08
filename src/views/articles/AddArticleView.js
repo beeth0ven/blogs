@@ -5,6 +5,7 @@ import { stateToHTML } from 'draft-js-export-html';
 import {newArticle} from "../../actions/article";
 import {Link} from "react-router";
 import {RaisedButton} from "material-ui";
+import falcorModel from "../../falcorModel";
 
 class AddArticleView extends React.Component {
   constructor(props) {
@@ -23,17 +24,23 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   };
 
-  onSubmit = () => {
+  onSubmit = async () => {
 
-    const newArticleID = 'MOCKEDRandomID' + Math.floor(Math.random() * 10000);
-    const newArticle = {
-      _id: newArticleID,
+    let newArticleObject = {
       articleTitle: this.state.title,
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON
     };
 
-    this.props.newArticle(newArticle);
+    const newArticleID = await falcorModel
+      .call('articles.add', [newArticleObject])
+      .then((result) => falcorModel
+        .getValue(['articles', 'newArticleID'])
+        .then((newArticleID) => newArticleID)
+      );
+
+    newArticleObject['_id'] = newArticleID;
+    this.props.newArticle(newArticleObject);
     this.setState({newArticleID});
   };
 

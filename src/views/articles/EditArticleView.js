@@ -5,6 +5,7 @@ import {deleteArticle, editArticle} from "../../actions/article";
 import {Link} from "react-router";
 import {Popover, RaisedButton} from "material-ui";
 import WYSIWYGeditor from "../../components/articles/WYSIWYGeditor";
+import falcorModel from "../../falcorModel";
 
 class EditArticleView extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class EditArticleView extends React.Component {
     this.setState({contentJSON, htmlContent})
   };
 
-  onSubmit = () => {
+  onSubmit = async () => {
     const editedArticleID = this.state.editedArticleID;
     const editedArticle = {
       _id: editedArticleID,
@@ -57,6 +58,9 @@ class EditArticleView extends React.Component {
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON
     };
+
+    await falcorModel
+      .call(['articles', 'update'], [editedArticle]);
 
     this.props.editArticle(editedArticle);
     this.setState({articleEditSuccess: true});
@@ -69,9 +73,13 @@ class EditArticleView extends React.Component {
     })
   };
 
-  onConfirmDelete = () => {
-    const editedArticleID = this.state.editedArticleID;
-    this.props.deleteArticle(editedArticleID);
+  onConfirmDelete = async () => {
+    const articleID = this.state.editedArticleID;
+
+    await falcorModel
+      .call(['articles', 'delete'], [articleID]);
+
+    this.props.deleteArticle(articleID);
 
     this.setState({openDelete: false});
     this.props.history.pushState(null, '/dashboard');
