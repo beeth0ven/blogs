@@ -13,7 +13,11 @@ const articleSchema = new Schema(
   {
     articleTitle: String,
     articleContent: String,
-    articleContentJSON: Object
+    articleContentJSON: Object,
+    articlePicUrl: {
+      type: String,
+      default: '/static/placeholder.png'
+    }
   },
   {
     minimize: false

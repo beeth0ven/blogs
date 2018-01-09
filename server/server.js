@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { modelJson, dataSourceRoute } from './services/falcorService';
 import {handleServerSideRender} from "./services/renderService";
+import {s3Path, s3router} from "./services/s3Service";
 
 const app = express();
 app.server = http.createServer(app);
@@ -11,6 +12,7 @@ app.server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(s3Path, s3router);
 app.use(modelJson, dataSourceRoute);
 app.use('/static', express.static('dist'));
 app.use(handleServerSideRender);

@@ -6,6 +6,7 @@ import {newArticle} from "../../actions/article";
 import {Link} from "react-router";
 import {RaisedButton} from "material-ui";
 import falcorModel from "../../falcorModel";
+import ImageUploader from "../../components/articles/ImageUploader";
 
 class AddArticleView extends React.Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class AddArticleView extends React.Component {
       title: 'test',
       contentJSON: {},
       htmlContent: '',
-      newArticleID: null
+      newArticleID: null,
+      articlePicUrl: '/static/placeholder.png'
     };
   }
 
@@ -29,7 +31,8 @@ class AddArticleView extends React.Component {
     let newArticleObject = {
       articleTitle: this.state.title,
       articleContent: this.state.htmlContent,
-      articleContentJSON: this.state.contentJSON
+      articleContentJSON: this.state.contentJSON,
+      articlePicUrl: this.state.articlePicUrl
     };
 
     const newArticleID = await falcorModel
@@ -44,11 +47,16 @@ class AddArticleView extends React.Component {
     this.setState({newArticleID});
   };
 
+  onImgUrlChange = (articlePicUrl) => {
+    this.setState({articlePicUrl})
+  };
+
   render() {
 
     const styles = {
       rootDiv: {height: '100%', width: '75%', margin: 'auto'},
-      raisedButton: {margin: '10px auto', display: 'block', width: 150}
+      raisedButton: {margin: '10px auto', display: 'block', width: 150},
+      imgUploaderDiv: {margin: '10px 10px 10px 10px'}
     };
 
     if (this.state.newArticleID) {
@@ -74,6 +82,14 @@ class AddArticleView extends React.Component {
           name='addarticle'
           onChangeTextJSON={this.onDraftJSChange}
         />
+
+        <div style={styles.imgUploaderDiv}>
+          <ImageUploader
+            onImgUrlChange={this.onImgUrlChange}
+            articlePicUrl={this.state.articlePicUrl}
+          />
+        </div>
+
         <RaisedButton
           onClick={this.onSubmit}
           secondary={true}
