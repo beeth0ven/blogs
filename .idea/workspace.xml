@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a2a0a18-6190-41ff-b7a1-88592e592fb4" name="Default" comment="Add LoginView">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/internal/Subject.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Air.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Air.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/internal/jwt/index.js" afterPath="$PROJECT_DIR$/server/internal/jwt/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/routes/appRoutes.js" afterPath="$PROJECT_DIR$/server/routes/appRoutes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/article.js" afterPath="$PROJECT_DIR$/src/actions/article.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/falcorModel.js" afterPath="$PROJECT_DIR$/src/falcorModel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/layouts/CoreLayout.js" afterPath="$PROJECT_DIR$/src/layouts/CoreLayout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/articles/AddArticleView.js" afterPath="$PROJECT_DIR$/src/views/articles/AddArticleView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/articles/EditArticleView.js" afterPath="$PROJECT_DIR$/src/views/articles/EditArticleView.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -65,21 +57,11 @@
       <file leaf-file-name="appRoutes.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/routes/appRoutes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="33" column="6" lean-forward="true" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+            <state relative-caret-position="516">
+              <caret line="148" column="10" lean-forward="true" selection-start-line="148" selection-start-column="10" selection-end-line="148" selection-end-column="10" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/internal/jwt/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="55" lean-forward="true" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -307,7 +289,7 @@
       <workItem from="1513739127165" duration="10577000" />
       <workItem from="1513833881063" duration="28758000" />
       <workItem from="1514349459397" duration="55594000" />
-      <workItem from="1515052179303" duration="28843000" />
+      <workItem from="1515052179303" duration="31455000" />
     </task>
     <task id="LOCAL-00001" summary="Add LoginView">
       <created>1513661340488</created>
@@ -320,7 +302,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="222005000" />
+    <option name="totallyTimeSpent" value="224617000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="912" height="1080" extended-state="6" />
@@ -758,14 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/articles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/internal/jwt/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -774,10 +748,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/articles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/routes/appRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="33" column="6" lean-forward="true" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+        <state relative-caret-position="516">
+          <caret line="148" column="10" lean-forward="true" selection-start-line="148" selection-start-column="10" selection-end-line="148" selection-end-column="10" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>

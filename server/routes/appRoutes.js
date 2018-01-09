@@ -1,7 +1,7 @@
 import sessionRoutes from './sessionRoutes';
 import { Article } from '../services/mongooseService';
 import jsonGraph from 'falcor-json-graph';
-import {createToken, validToken} from "../internal/jwt/index";
+import {validToken} from "../internal/jwt/index";
 
 let $atom = jsonGraph.atom;
 let $ref = jsonGraph.ref;
@@ -10,6 +10,20 @@ let $error = jsonGraph.error;
 const atomArticleContentJSON = (articleObject) => {
   if (typeof articleObject.articleContentJSON !== 'undefined') {
     articleObject.articleContentJSON = $atom(articleObject.articleContentJSON);
+  }
+};
+
+const validSession = (sessionObject, path) => {
+  if (sessionObject.isAuthorized === false) {
+    return {
+      path,
+      value: $error('auth error')
+    }
+  } else if (sessionObject.role !== 'editor' && sessionObject.role !== 'admin') {
+    return {
+      path,
+      value: $error('you must be an editor in order to perform this action')
+    }
   }
 };
 
@@ -68,6 +82,9 @@ export default (req, res) => {
     {
       route: 'articles.add',
       call: (callPath, args) => {
+        const sessionError = validSession(sessionObject, ['articles']);
+        if (sessionError) { return sessionError }
+
         const articleObject = args[0];
         let article = new Article(articleObject);
 
@@ -105,6 +122,9 @@ export default (req, res) => {
     {
       route: 'articles.update',
       call: async (callPath, args) => {
+        const sessionError = validSession(sessionObject, ['articles']);
+        if (sessionError) { return sessionError }
+
         const articleObject = args[0];
         const articleID = articleObject['_id'];
         let article = new Article(articleObject);
@@ -132,6 +152,9 @@ export default (req, res) => {
     {
       route: 'articles.delete',
       call: (callPath, args) => {
+        const sessionError = validSession(sessionObject, ['articles']);
+        if (sessionError) { return sessionError }
+
         const articleID = args[0];
         return Article.find({ '_id': articleID })
           .remove((error) => {
