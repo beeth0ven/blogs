@@ -7,17 +7,19 @@ import {Link} from "react-router";
 import {RaisedButton} from "material-ui";
 import falcorModel from "../../falcorModel";
 import ImageUploader from "../../components/articles/ImageUploader";
+import {DEFAULT_ARTICLE_PIC_URL} from "../../internal/Constant";
+import { Form } from 'formsy-react';
+import DefaultInput from "../../components/DefaultInput";
 
 class AddArticleView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: 'test',
       contentJSON: {},
       htmlContent: '',
       newArticleID: null,
-      articlePicUrl: '/static/placeholder.png'
+      articlePicUrl: DEFAULT_ARTICLE_PIC_URL
     };
   }
 
@@ -26,10 +28,15 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   };
 
-  onSubmit = async () => {
+  onImgUrlChange = (articlePicUrl) => {
+    this.setState({articlePicUrl})
+  };
+
+  onSubmit = async (formInfo) => {
 
     let newArticleObject = {
-      articleTitle: this.state.title,
+      articleTitle: formInfo.title,
+      articleSubTitle: formInfo.subTitle,
       articleContent: this.state.htmlContent,
       articleContentJSON: this.state.contentJSON,
       articlePicUrl: this.state.articlePicUrl
@@ -45,10 +52,6 @@ class AddArticleView extends React.Component {
     newArticleObject['_id'] = newArticleID;
     this.props.newArticle(newArticleObject);
     this.setState({newArticleID});
-  };
-
-  onImgUrlChange = (articlePicUrl) => {
-    this.setState({articlePicUrl})
   };
 
   render() {
@@ -78,25 +81,42 @@ class AddArticleView extends React.Component {
     return (
       <div style={styles.rootDiv}>
         <h1>Add Article</h1>
-        <WYSIWYGeditor
-          name='addarticle'
-          onChangeTextJSON={this.onDraftJSChange}
-        />
 
-        <div style={styles.imgUploaderDiv}>
-          <ImageUploader
-            onImgUrlChange={this.onImgUrlChange}
-            articlePicUrl={this.state.articlePicUrl}
+        <Form onSubmit={this.onSubmit}>
+
+          <DefaultInput
+            onChange={(event) => {}}
+            name='title'
+            title='Article Title (required)'
+            required
           />
-        </div>
 
-        <RaisedButton
-          onClick={this.onSubmit}
-          secondary={true}
-          type='submit'
-          style={styles.raisedButton}
-          label='Submit Article'
-        />
+          <DefaultInput
+            onChange={(event) => {}}
+            name='subTitle'
+            title='Article Subtitle'
+          />
+
+          <WYSIWYGeditor
+            name='addarticle'
+            onChangeTextJSON={this.onDraftJSChange}
+          />
+
+          <div style={styles.imgUploaderDiv}>
+            <ImageUploader
+              articlePicUrl={this.state.articlePicUrl}
+              onImgUrlChange={this.onImgUrlChange}
+            />
+          </div>
+
+          <RaisedButton
+            secondary={true}
+            type='submit'
+            style={styles.raisedButton}
+            label='Submit Article'
+          />
+
+        </Form>
       </div>
     )
   }

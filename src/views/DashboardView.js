@@ -5,6 +5,7 @@ import List from "material-ui/lib/lists/list";
 import ListItem from "material-ui/lib/lists/list-item";
 import {Link} from "react-router";
 import {mapMap} from "../internal/MapExtension";
+import {DEFAULT_ARTICLE_PIC_URL} from "../internal/Constant";
 
 class DashboardView extends React.Component {
 
@@ -13,7 +14,7 @@ class DashboardView extends React.Component {
           key={key}>
       <ListItem
         leftAvatar={<img
-          src='/static/placeholder.png'
+          src={article.articlePicUrl || DEFAULT_ARTICLE_PIC_URL}
           width='50'
           height='50'
         />}

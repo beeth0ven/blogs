@@ -12,20 +12,17 @@ class PublishingApp extends React.Component {
 
   componentWillMount() {
     if (typeof window !== 'undefined') {
-      this.fetch();
+      this.props.fetchArticles();
     }
-  }
-
-  async fetch() {
-    const { fetchArticles } = this.props;
-    fetchArticles()
   }
 
   articleJSX = (key, article) => (
     <div key={key}>
       <ArticleCard
         title={article.articleTitle}
+        subTitle={article.articleSubTitle}
         content={article.articleContent}
+        articlePicUrl={article.articlePicUrl}
       />
     </div>
   );

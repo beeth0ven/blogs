@@ -2,6 +2,7 @@
 
 import React from "react";
 import {Card, CardHeader, CardMedia, CardTitle, Paper} from "material-ui";
+import {DEFAULT_ARTICLE_PIC_URL} from "../internal/Constant";
 
 class ArticleCard extends React.Component {
 
@@ -11,7 +12,9 @@ class ArticleCard extends React.Component {
 
   render() {
     const title = this.props.title || 'no title provided';
+    const subTitle = this.props.subTitle || '';
     const content = this.props.content || 'no content provided';
+    const articlePicUrl = this.props.articlePicUrl || DEFAULT_ARTICLE_PIC_URL;
 
     const paperStyle = {
       padding: 10,
@@ -34,16 +37,16 @@ class ArticleCard extends React.Component {
       <Paper style={paperStyle}>
         <CardHeader
           title={title}
-          subtitle='Subtitle'
+          subtitle={subTitle}
           avatar='/static/avatar.png'
         />
 
         <div style={leftDivStyle}>
           <Card>
             <CardMedia
-              overlay={<CardTitle title={title} subtitle='Overlay subtitle'/>}
+              overlay={<CardTitle title={title} subtitle={subTitle}/>}
             >
-              <img src='/static/placeholder.png' height='190' />
+              <img src={articlePicUrl} height='190' />
             </CardMedia>
           </Card>
         </div>

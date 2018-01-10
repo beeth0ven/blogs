@@ -1,5 +1,5 @@
 
-import {Article} from "./mongooseService";
+import {Article} from "./mongooseService/index";
 
 const articlesById = (articles) => articles
   .reduce((accumulator, article) => new Map([

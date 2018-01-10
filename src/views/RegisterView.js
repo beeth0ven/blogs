@@ -13,11 +13,11 @@ class RegisterView extends React.Component {
     }
   }
 
-  register = async (newUserModel) => {
-    console.info('newUserModel', newUserModel);
+  register = async (formInfo) => {
+    console.info('newUserModel', formInfo);
 
     await falcorModel
-      .call('register', [newUserModel])
+      .call('register', [formInfo])
       .then(result => result);
 
     const newUserId = await falcorModel.getValue('register.newUserId');

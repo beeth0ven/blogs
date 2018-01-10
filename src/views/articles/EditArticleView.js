@@ -6,6 +6,10 @@ import {Link} from "react-router";
 import {Popover, RaisedButton} from "material-ui";
 import WYSIWYGeditor from "../../components/articles/WYSIWYGeditor";
 import falcorModel from "../../falcorModel";
+import {DEFAULT_ARTICLE_PIC_URL} from "../../internal/Constant";
+import ImageUploader from "../../components/articles/ImageUploader";
+import {Form} from "formsy-react";
+import DefaultInput from "../../components/DefaultInput";
 
 class EditArticleView extends React.Component {
   constructor(props) {
@@ -14,11 +18,11 @@ class EditArticleView extends React.Component {
     this.state = {
       articleFetchError: null,
       articleEditSuccess: null,
-      editedArticleID: null,
+      articleID: null,
       article: null,
-      title: 'test',
       contentJSON: {},
       htmlContent: '',
+      articlePicUrl: DEFAULT_ARTICLE_PIC_URL,
       openDelete: false,
       deleteAnchorEl: null
     }
@@ -36,8 +40,11 @@ class EditArticleView extends React.Component {
       let article = articles.get(articleID);
       if (article) {
         this.setState({
-          editedArticleID: articleID,
-          article
+          articleID,
+          article,
+          articleContent: article.articleContent,
+          articleContentJSON: article.articleContentJSON,
+          articlePicUrl: article.articlePicUrl,
         })
       } else {
         this.setState({ articleFetchError: true })
@@ -50,19 +57,25 @@ class EditArticleView extends React.Component {
     this.setState({contentJSON, htmlContent})
   };
 
-  onSubmit = async () => {
-    const editedArticleID = this.state.editedArticleID;
-    const editedArticle = {
-      _id: editedArticleID,
-      articleTitle: this.state.title,
+  onImgUrlChange = (articlePicUrl) => {
+    this.setState({articlePicUrl})
+  };
+
+  onSubmit = async (formInfo) => {
+    const articleID = this.state.articleID;
+    const article = {
+      _id: articleID,
+      articleTitle: formInfo.title,
+      articleSubTitle: formInfo.subTitle,
       articleContent: this.state.htmlContent,
-      articleContentJSON: this.state.contentJSON
+      articleContentJSON: this.state.contentJSON,
+      articlePicUrl: this.state.articlePicUrl
     };
 
     await falcorModel
-      .call(['articles', 'update'], [editedArticle]);
+      .call(['articles', 'update'], [article]);
 
-    this.props.editArticle(editedArticle);
+    this.props.editArticle(article);
     this.setState({articleEditSuccess: true});
   };
 
@@ -74,7 +87,7 @@ class EditArticleView extends React.Component {
   };
 
   onConfirmDelete = async () => {
-    const articleID = this.state.editedArticleID;
+    const articleID = this.state.articleID;
 
     await falcorModel
       .call(['articles', 'delete'], [articleID]);
@@ -93,12 +106,13 @@ class EditArticleView extends React.Component {
 
     const styles = {
       rootDiv: {height: '100%', width: '75%', margin: 'auto'},
-      raisedButton: {margin: '10px auto', display: 'block', width: 150}
+      raisedButton: {margin: '10px auto', display: 'block', width: 150},
+      imgUploaderDiv: {margin: '10px 10px 10px 10px'}
     };
 
     if (this.state.articleFetchError) {
       return <h1>Article not found(invalid article's ID {this.props.params.articleID})</h1>
-    } else if (!this.state.editedArticleID) {
+    } else if (!this.state.articleID) {
       return <h1>Loading article details</h1>
     } else if (this.state.articleEditSuccess) {
       return (
@@ -121,19 +135,46 @@ class EditArticleView extends React.Component {
     return (
       <div style={styles.rootDiv}>
         <h1>Edit an existing article</h1>
-        <WYSIWYGeditor
-        initialValue={initialValue}
-        name='editarticle'
-        title='Edit an article'
-        onChangeTextJSON={this.onDraftJSChange}
-      />
-        <RaisedButton
-          onClick={this.onSubmit}
-          secondary={true}
-          type='submit'
-          style={styles.raisedButton}
-          label='Submit Edition'
-        />
+
+        <Form onSubmit={this.onSubmit}>
+
+          <DefaultInput
+            onChange={(event) => {}}
+            name='title'
+            value={this.state.article.articleTitle}
+            title='Article Title (required)'
+            required
+          />
+
+          <DefaultInput
+            onChange={(event) => {}}
+            name='subTitle'
+            value={this.state.article.articleSubTitle}
+            title='Article Subtitle'
+          />
+
+          <WYSIWYGeditor
+            initialValue={initialValue}
+            name='editarticle'
+            title='Edit an article'
+            onChangeTextJSON={this.onDraftJSChange}
+          />
+
+          <div style={styles.imgUploaderDiv}>
+            <ImageUploader
+              articlePicUrl={this.state.articlePicUrl}
+              onImgUrlChange={this.onImgUrlChange}
+            />
+          </div>
+
+          <RaisedButton
+            secondary={true}
+            type='submit'
+            style={styles.raisedButton}
+            label='Submit Edition'
+          />
+        </Form>
+
         <hr/>
         <h1>Delete permanently this article</h1>
         <RaisedButton

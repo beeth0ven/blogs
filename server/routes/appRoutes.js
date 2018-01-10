@@ -61,7 +61,7 @@ export default (req, res) => {
       }
     },
     {
-      route: 'articlesByID[{keys}]["_id","articleTitle","articleContent", "articleContentJSON"]',
+      route: 'articlesByID[{keys}]["_id","articleTitle", "articleSubTitle","articleContent", "articleContentJSON", "articlePicUrl"]',
       get: (pathSet) => {
         const articleIDs = pathSet[1];
         return Article.find(
