@@ -9,20 +9,26 @@ import {DEFAULT_ARTICLE_PIC_URL} from "../internal/Constant";
 
 class DashboardView extends React.Component {
 
-  articleJSX = (key, article) => (
-    <Link to={`/edit-article/${article['_id']}`}
-          key={key}>
-      <ListItem
-        leftAvatar={<img
-          src={article.articlePicUrl || DEFAULT_ARTICLE_PIC_URL}
-          width='50'
-          height='50'
-        />}
-        primaryText={article.articleTitle}
-        secondaryText={article.articleContent}
-      />
-    </Link>
-  );
+  articleJSX = (key, article) => {
+
+    const articleContentPlanText = article.articleContent
+      .replace(/<\/?[^>]+(>|$)/g, '');
+
+    return (
+      <Link to={`/edit-article/${article['_id']}`}
+            key={key}>
+        <ListItem
+          leftAvatar={<img
+            src={article.articlePicUrl || DEFAULT_ARTICLE_PIC_URL}
+            width='50'
+            height='50'
+          />}
+          primaryText={article.articleTitle}
+          secondaryText={articleContentPlanText}
+        />
+      </Link>
+    );
+  };
 
   render() {
 
