@@ -13,11 +13,11 @@ class LoginView extends React.Component {
     }
   }
 
-  login = async (credentials) => {
-    console.info('credentials', credentials);
+  onSubmit = async (formInfo) => {
+    console.info('credentials', formInfo);
 
     await falcorModel
-      .call(['login'], [credentials])
+      .call(['login'], [formInfo])
       .then((result) => result);
 
     const tokenRes = await falcorModel.getValue('login.token');
@@ -45,7 +45,7 @@ class LoginView extends React.Component {
     return (
       <div>
         <div style={{maxWidth: 450, margin: '0 auto'}}>
-          <LoginForm onSubmit={this.login}/>
+          <LoginForm onSubmit={this.onSubmit}/>
         </div>
         <Snackbar
           autoHideDuration={4000}

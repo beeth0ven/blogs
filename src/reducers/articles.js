@@ -1,7 +1,7 @@
 
 import {deletedMap} from "../internal/MapExtension";
 
-const articlesById = (responseArticles) => Object.keys(responseArticles)
+const articlesByID = (responseArticles) => Object.keys(responseArticles)
   .reduce((accumulator, key) => {
     const article = responseArticles[key];
     return new Map([
@@ -13,7 +13,7 @@ const articles = (state = new Map(), action) => {
   console.log('articles.action', action);
   switch (action.type) {
     case 'ADD_ARTICLES':
-      const articlesMap = articlesById(action.data);
+      const articlesMap = articlesByID(action.data);
       return new Map([
         ...state,
         ...articlesMap

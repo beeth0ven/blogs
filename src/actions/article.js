@@ -29,11 +29,18 @@ export const getArticles = async (dispatch) => {
     .get([
       'articles',
       {from: 0, to: articlesCount-1},
-      ['_id', 'articleTitle', 'articleContent']
+      ['_id', 'articleTitle', 'articleSubTitle', 'articleContent', 'articleContentJSON', 'articlePicUrl']
     ])
     .then((response) => {
       return response.json.articles
+    }).catch(error => {
+      console.debug(error);
+      return 500;
     });
+
+  if (articles === 500) {
+    return;
+  }
 
   dispatch(addArticles(articles));
 };

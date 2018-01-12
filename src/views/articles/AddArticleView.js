@@ -5,16 +5,21 @@ import { stateToHTML } from 'draft-js-export-html';
 import {newArticle} from "../../actions/article";
 import {Link} from "react-router";
 import {RaisedButton} from "material-ui";
+import falcorModel from "../../falcorModel";
+import ImageUploader from "../../components/articles/ImageUploader";
+import {DEFAULT_ARTICLE_PIC_URL} from "../../internal/Constant";
+import { Form } from 'formsy-react';
+import DefaultInput from "../../components/DefaultInput";
 
 class AddArticleView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: 'test',
       contentJSON: {},
       htmlContent: '',
-      newArticleID: null
+      newArticleID: null,
+      articlePicUrl: DEFAULT_ARTICLE_PIC_URL
     };
   }
 
@@ -23,17 +28,29 @@ class AddArticleView extends React.Component {
     this.setState({contentJSON, htmlContent});
   };
 
-  onSubmit = () => {
+  onImgUrlChange = (articlePicUrl) => {
+    this.setState({articlePicUrl})
+  };
 
-    const newArticleID = 'MOCKEDRandomID' + Math.floor(Math.random() * 10000);
-    const newArticle = {
-      _id: newArticleID,
-      articleTitle: this.state.title,
+  onSubmit = async (formInfo) => {
+
+    let newArticleObject = {
+      articleTitle: formInfo.title,
+      articleSubTitle: formInfo.subTitle,
       articleContent: this.state.htmlContent,
-      articleContentJSON: this.state.contentJSON
+      articleContentJSON: this.state.contentJSON,
+      articlePicUrl: this.state.articlePicUrl
     };
 
-    this.props.newArticle(newArticle);
+    const newArticleID = await falcorModel
+      .call('articles.add', [newArticleObject])
+      .then((result) => falcorModel
+        .getValue(['articles', 'newArticleID'])
+        .then((newArticleID) => newArticleID)
+      );
+
+    newArticleObject['_id'] = newArticleID;
+    this.props.newArticle(newArticleObject);
     this.setState({newArticleID});
   };
 
@@ -41,7 +58,8 @@ class AddArticleView extends React.Component {
 
     const styles = {
       rootDiv: {height: '100%', width: '75%', margin: 'auto'},
-      raisedButton: {margin: '10px auto', display: 'block', width: 150}
+      raisedButton: {margin: '10px auto', display: 'block', width: 150},
+      imgUploaderDiv: {margin: '10px 10px 10px 10px'}
     };
 
     if (this.state.newArticleID) {
@@ -63,17 +81,42 @@ class AddArticleView extends React.Component {
     return (
       <div style={styles.rootDiv}>
         <h1>Add Article</h1>
-        <WYSIWYGeditor
-          name='addarticle'
-          onChangeTextJSON={this.onDraftJSChange}
-        />
-        <RaisedButton
-          onClick={this.onSubmit}
-          secondary={true}
-          type='submit'
-          style={styles.raisedButton}
-          label='Submit Article'
-        />
+
+        <Form onSubmit={this.onSubmit}>
+
+          <DefaultInput
+            onChange={(event) => {}}
+            name='title'
+            title='Article Title (required)'
+            required
+          />
+
+          <DefaultInput
+            onChange={(event) => {}}
+            name='subTitle'
+            title='Article Subtitle'
+          />
+
+          <WYSIWYGeditor
+            name='addarticle'
+            onChangeTextJSON={this.onDraftJSChange}
+          />
+
+          <div style={styles.imgUploaderDiv}>
+            <ImageUploader
+              articlePicUrl={this.state.articlePicUrl}
+              onImgUrlChange={this.onImgUrlChange}
+            />
+          </div>
+
+          <RaisedButton
+            secondary={true}
+            type='submit'
+            style={styles.raisedButton}
+            label='Submit Article'
+          />
+
+        </Form>
       </div>
     )
   }

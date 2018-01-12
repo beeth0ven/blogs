@@ -2,10 +2,28 @@ import React from 'react';
 import { Link } from 'react-router';
 import themeDecorator from 'material-ui/lib/styles/theme-decorator';
 import getMuiTheme from "material-ui/lib/styles/getMuiTheme";
-import {AppBar, RaisedButton} from "material-ui";
+import {AppBar, RaisedButton, Snackbar} from "material-ui";
 import ActionHome from "material-ui/lib/svg-icons/action/home";
+import {errorSubject} from "../falcorModel";
 
 class CoreLayout extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      errorMsg: null
+    };
+
+    if (typeof window !== 'undefined') {
+      errorSubject.subscribe({onNext: this.onFalcorError});
+    }
+  };
+
+  onFalcorError = ({ errorValue, path }) => {
+    const errorMsg = `Error: ${errorValue} (path ${JSON.stringify(path)})`;
+    this.setState({errorMsg});
+  };
 
   style = {
     homeIcon: {
@@ -53,10 +71,20 @@ class CoreLayout extends React.Component {
     ? this.loggedInMenuLinksJSX()
     : this.loggedOutMenuLinksJSX();
 
+  errorSnackbarJSX = () => (this.state.errorMsg === null)
+    ? null
+    : <Snackbar
+        open={true}
+        message={this.state.errorMsg}
+        autoHideDuration={8000}
+        onRequestClose={() => console.log('You can add custom on close code')}
+    />;
+
   render() {
 
     return (
       <div>
+        {this.errorSnackbarJSX()}
         <AppBar
           title='Publishing App'
           iconElementLeft={this.homePageButtonJSX()}
