@@ -4,4 +4,14 @@ const config = {
   env: process.env.MONGO_ENV || 'local'
 };
 
-export default config;
+const getDBUser = () => {
+  if (process.env.MONGO_USER && process.env.MONGO_PASS) {
+    return {
+      user: process.env.MONGO_USER,
+      pass: process.env.MONGO_PASS
+    }
+  }
+  return null
+};
+
+export { config, getDBUser } ;
