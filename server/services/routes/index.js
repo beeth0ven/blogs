@@ -5,7 +5,6 @@ const routes = [
   {
     route: 'articles.length',
     get: async () => {
-      console.log('articles.length');
       const count = await Article.count();
       return {
         path: ['articles', 'length'],
@@ -16,7 +15,6 @@ const routes = [
   {
     route: 'articles[{integers}]',
     get: async (pathSet) => {
-      console.log('articles');
       const indices = pathSet[1];
       const articles = await Article.find({}, '_id');
       return indices.map(index => ({
@@ -28,7 +26,6 @@ const routes = [
   {
     route: 'articlesById[{keys}]["_id", "title", "content"]',
     get: async (pathSet) => {
-      console.log('articlesById');
       const _ids = pathSet[1];
       const articles = await Article.find({ _id: { $in: _ids } });
       return articles.map(article => ({

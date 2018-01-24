@@ -12,6 +12,3 @@ render(
   ),
   document.getElementById('root')
 );
-
-
-

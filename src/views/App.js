@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {fetchArticles} from "../actions/article";
+import {newArrayFromMap} from "../libaries/map";
 
 class App extends Component {
 
@@ -12,8 +13,8 @@ class App extends Component {
     this.props.fetchArticles()
   };
 
-  articleJSX = (article) => (
-    <div key={article._id}>
+  articleJSX = (_id, article) => (
+    <div key={_id}>
       <h2>{article.title}</h2>
       <h4>{article.content}</h4>
     </div>
@@ -25,7 +26,7 @@ class App extends Component {
     return (
       <div>
         <h1>Publishing App</h1>
-        {articles.map(this.articleJSX)}
+        {newArrayFromMap(articles, this.articleJSX)}
       </div>
     )
   }
@@ -33,7 +34,5 @@ class App extends Component {
 
 export default connect(
   (state) => ({...state.article}),
-  (dispatch) => ({
-    fetchArticles: () => dispatch(fetchArticles())
-  })
+  { fetchArticles }
 )(App);

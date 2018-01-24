@@ -1,7 +1,7 @@
 import {ON_FETCH_ARTICLES_ERROR, ON_FETCH_ARTICLES_SUCCESS} from "../actions/article";
 
 const empty = {
-  articles: [],
+  articles: new Map(),
   error: null
 };
 
@@ -14,7 +14,7 @@ const articleReducer = (state = empty, action) => {
       };
     case ON_FETCH_ARTICLES_ERROR:
       return {
-        ...state,
+        articles: state.articles,
         error: action.error
       };
     default:

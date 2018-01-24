@@ -1,7 +1,7 @@
 import falcorModel from '../falcorModel';
-import Falcor from 'falcor';
+import {newMapFromObject} from "../libaries/map";
 
-const ON_FETCH_ARTICLES_SUCCESS = 'ON_FETCHED_ARTICLES';
+const ON_FETCH_ARTICLES_SUCCESS = 'ON_FETCH_ARTICLES_SUCCESS';
 const ON_FETCH_ARTICLES_ERROR = 'ON_FETCH_ARTICLES_ERROR';
 
 const onFetchArticlesSuccess = (articles) => ({
@@ -26,10 +26,9 @@ const fetchArticles = () => async (dispatch) => {
       ['_id', 'title', 'content']
     ]).then(response => response.json.articles);
 
-    const articles = Falcor.keys(articlesByIndex)
-      .map(key => articlesByIndex[key]);
+    const articlesMap = newMapFromObject(articlesByIndex);
 
-    dispatch(onFetchArticlesSuccess(articles))
+    dispatch(onFetchArticlesSuccess(articlesMap))
 
   } catch (error) {
     dispatch(onFetchArticlesError(error))
