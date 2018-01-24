@@ -1,14 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './views/App'
-import { Provider } from "react-redux";
 import store from "./app/store";
+import history from './app/history';
+import Root from "./layouts/Root";
 
 render(
-  (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  ),
+  (<Root store={store} history={history}/>),
   document.getElementById('root')
 );
