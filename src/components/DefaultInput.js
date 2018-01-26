@@ -1,42 +1,40 @@
 import React, { Component } from 'react';
-import {HOC} from 'formsy-react';
+import { withFormsy } from 'formsy-react';
 import {TextField} from "material-ui";
 
 class DefaultInput extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      text: null
+      text: ''
     }
-  }
+  };
 
   onTextFieldChange = (event) => {
-    const { onChange, onTextChange } = this.props;
     this.setState({text: event.target.value});
-    onChange(event);
-    onTextChange(event.target.value);
+    this.props.setValue(event.target.value);
   };
 
   render() {
-    const { name, title, type, value, defaultValue, required, children } = this.props;
+    const { name, title, required, type, defaultValue } = this.props;
     return (
       <div>
         <TextField
           ref={name}
-          name={name}
           floatingLabelText={title}
-          type={type}
-          required={required}
-          value={this.state.text || value}
+          name={name}
           onChange={this.onTextFieldChange}
+          required={required}
+          type={type}
+          value={this.state.text || ''}
           defaultValue={defaultValue}
         />
-        {children}
+        {this.props.children}
       </div>
-    )
+    );
   }
 }
 
-export default DefaultInput;
+export default withFormsy(DefaultInput);

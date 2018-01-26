@@ -1,11 +1,18 @@
 import React from 'react';
+import Formsy from 'formsy-react';
 import {Paper, RaisedButton} from "material-ui";
 import DefaultInput from "./DefaultInput";
-import Formsy from 'formsy-react';
 
-const LoginForm = ({ onSubmit }) => (
+const RegisterForm = ({ onSubmit }) => (
   <Formsy onSubmit={onSubmit}>
     <Paper zDepth={1} style={{padding: 32}}>
+
+      <DefaultInput
+        title='Email'
+        name='email'
+        type='text'
+        required
+      />
 
       <DefaultInput
         title='Username'
@@ -23,14 +30,14 @@ const LoginForm = ({ onSubmit }) => (
 
       <div style={{marginTop: 24}}>
         <RaisedButton
-          secondary
+          label='Register'
           type='submit'
           style={{
-            margin: '0 auto',
+            width: 150,
             display: 'block',
-            width: 150
+            margin: '0 auto'
           }}
-          label='Log in'
+          secondary
         />
       </div>
 
@@ -38,4 +45,4 @@ const LoginForm = ({ onSubmit }) => (
   </Formsy>
 );
 
-export default LoginForm;
+export default RegisterForm;

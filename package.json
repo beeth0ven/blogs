@@ -29,6 +29,7 @@
     "falcor-json-graph": "^2.2.1",
     "falcor-router": "^0.8.1",
     "formsy-react": "^1.1.2",
+    "history": "^3.0.0",
     "material-ui": "^0.20.0",
     "mongoose": "^5.0.1",
     "react": "^16.2.0",
