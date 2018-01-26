@@ -1,8 +1,8 @@
 import {
-  ON_CLEAR_ERROR,
+  ON_REGISTER_CLEAR,
   ON_REGISTER_ERROR,
   ON_REGISTER_SUCCESS,
-  ON_REGISTERING
+  ON_REGISTER_EXECUTING
 } from "../actions/register";
 
 const empty = {
@@ -13,7 +13,7 @@ const empty = {
 
 const register = (state = empty, action) => {
   switch (action.type) {
-    case ON_REGISTERING:
+    case ON_REGISTER_EXECUTING:
       return {
         newUserId: null,
         isExecuting: true,
@@ -31,11 +31,8 @@ const register = (state = empty, action) => {
         isExecuting: false,
         error: action.error
       };
-    case ON_CLEAR_ERROR:
-      return {
-        ...state,
-        error: null
-      };
+    case ON_REGISTER_CLEAR:
+      return empty;
     default:
       return state
   }

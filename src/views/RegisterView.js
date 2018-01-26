@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import RegisterForm from "../components/RegisterForm";
 import {connect} from "react-redux";
-import {onClearError, registerIfNeeded} from "../actions/register";
+import {onRegisterClear, registerIfNeeded} from "../actions/register";
 import {Snackbar} from "material-ui";
 import {errorMessage} from "../libaries/public/error";
+import {pushLogin} from "../actions/router";
 
 class RegisterView extends Component {
 
@@ -12,8 +13,12 @@ class RegisterView extends Component {
     this.props.registerIfNeeded(formInfo);
   };
 
+  pushLogin = () => {
+    this.props.onRegisterClear();
+    this.props.pushLogin();
+  };
+
   render() {
-    console.log('props', this.props);
     return (
       <div>
         <div style={{maxWidth: 450, margin: '0 auto'}}>
@@ -23,7 +28,15 @@ class RegisterView extends Component {
           open={this.props.error !== null}
           message={errorMessage(this.props.error)}
           autoHideDuration={4000}
-          onRequestClose={this.props.onClearError}
+          onRequestClose={this.props.onRegisterClear}
+        />
+        <Snackbar
+          open={this.props.newUserId !== null}
+          message={'Register success!'}
+          action='Login'
+          autoHideDuration={4000}
+          onActionClick={this.pushLogin}
+          onRequestClose={this.pushLogin}
         />
       </div>
     )
@@ -32,5 +45,5 @@ class RegisterView extends Component {
 
 export default connect(
   state => ({...state.register}),
-  ({registerIfNeeded, onClearError})
+  ({registerIfNeeded, onRegisterClear, pushLogin})
 )(RegisterView);

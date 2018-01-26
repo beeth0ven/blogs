@@ -1,12 +1,12 @@
 import falcorModel from '../falcorModel';
 
-const ON_REGISTERING = 'ON_REGISTERING';
-const ON_REGISTER_SUCCESS = 'ON_REGISTER_SUCCESS';
-const ON_REGISTER_ERROR = 'ON_REGISTER_ERROR';
-const ON_CLEAR_ERROR = 'ON_CLEAR_ERROR';
+const ON_REGISTER_EXECUTING = 'ON_REGISTER_EXECUTING';
+const ON_REGISTER_SUCCESS   = 'ON_REGISTER_SUCCESS';
+const ON_REGISTER_ERROR     = 'ON_REGISTER_ERROR';
+const ON_REGISTER_CLEAR     = 'ON_REGISTER_RESET';
 
-const onRegistering = () => ({
-  type: ON_REGISTERING
+const onRegisterExecuting = () => ({
+  type: ON_REGISTER_EXECUTING
 });
 
 const onRegisterSuccess = (newUserId) => ({
@@ -19,14 +19,14 @@ const onRegisterError = (error) => ({
   error
 });
 
-const onClearError = (error) => ({
-  type: ON_CLEAR_ERROR
+const onRegisterClear = () => ({
+  type: ON_REGISTER_CLEAR
 });
 
 const registerIfNeeded = (formInfo) => async (dispatch, getState) => {
   const shouldRegister = !getState().register.isExecuting;
   if (shouldRegister) {
-    dispatch(onRegistering());
+    dispatch(onRegisterExecuting());
 
     try {
       await falcorModel.call('register', [formInfo]);
@@ -41,13 +41,13 @@ const registerIfNeeded = (formInfo) => async (dispatch, getState) => {
 };
 
 export {
-  ON_REGISTERING,
+  ON_REGISTER_EXECUTING,
   ON_REGISTER_SUCCESS,
   ON_REGISTER_ERROR,
-  ON_CLEAR_ERROR,
-  onRegistering,
+  ON_REGISTER_CLEAR,
+  onRegisterExecuting,
   onRegisterSuccess,
   onRegisterError,
-  onClearError,
+  onRegisterClear,
   registerIfNeeded,
 };
