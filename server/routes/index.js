@@ -1,7 +1,9 @@
-import Article from "../mongooseService/Article";
-import { ref } from 'falcor-json-graph';
+import Article from "../services/mongooseService/Article";
+import { ref as $ref } from 'falcor-json-graph';
+import session from "./session";
 
 const routes = [
+  ...session,
   {
     route: 'articles.length',
     get: async () => {
@@ -19,7 +21,7 @@ const routes = [
       const articles = await Article.find({}, '_id');
       return indices.map(index => ({
         path: ['articles', index],
-        value: ref(['articlesById', String(articles[index]['_id'])])
+        value: $ref(['articlesById', String(articles[index]['_id'])])
       }));
     }
   },

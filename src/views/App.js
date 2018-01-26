@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {fetchArticles} from "../actions/article";
-import {newArrayFromMap} from "../libaries/map";
+import {newArrayFromMap} from "../libaries/public/map";
 
 class App extends Component {
 

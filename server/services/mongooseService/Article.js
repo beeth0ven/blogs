@@ -7,8 +7,4 @@ const schema = new Schema({
 
 const Article = mongoose.model('Article', schema, 'articles');
 
-// Article
-//   .find({}, ['_id'])
-//   .then(value => console.log(value));
-
 export default Article;

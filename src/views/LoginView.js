@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import LoginForm from "../components/LoginForm";
+import falcorModel from "../falcorModel";
 
 class LoginView extends Component {
 
-  onSubmit = (formInfo) => {
-    console.log('formInfo', formInfo)
+  onSubmit = async (formInfo) => {
+    console.log('formInfo', formInfo);
+
   };
 
   render() {

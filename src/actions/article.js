@@ -1,5 +1,5 @@
 import falcorModel from '../falcorModel';
-import {newMapFromObject} from "../libaries/map";
+import {newMapFromObject} from "../libaries/public/map";
 
 const ON_FETCH_ARTICLES_SUCCESS = 'ON_FETCH_ARTICLES_SUCCESS';
 const ON_FETCH_ARTICLES_ERROR = 'ON_FETCH_ARTICLES_ERROR';
