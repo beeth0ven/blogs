@@ -6,42 +6,35 @@ import {Snackbar} from "material-ui";
 import {errorMessage} from "../libaries/public/error";
 import {pushLogin} from "../actions/router";
 
-class RegisterView extends Component {
+const RegisterView = ({ newUserId, error, registerIfNeeded, onRegisterClear, pushLogin }) => {
 
-  onSubmit = async (formInfo) => {
-    console.log('formInfo', formInfo);
-    this.props.registerIfNeeded(formInfo);
+  const pushLoginAndClear = () => {
+    onRegisterClear();
+    pushLogin();
   };
 
-  pushLogin = () => {
-    this.props.onRegisterClear();
-    this.props.pushLogin();
-  };
-
-  render() {
-    return (
-      <div>
-        <div style={{maxWidth: 450, margin: '0 auto'}}>
-          <RegisterForm onSubmit={this.onSubmit}/>
-        </div>
-        <Snackbar
-          open={this.props.error !== null}
-          message={errorMessage(this.props.error)}
-          autoHideDuration={4000}
-          onRequestClose={this.props.onRegisterClear}
-        />
-        <Snackbar
-          open={this.props.newUserId !== null}
-          message={'Register success!'}
-          action='Login'
-          autoHideDuration={4000}
-          onActionClick={this.pushLogin}
-          onRequestClose={this.pushLogin}
-        />
+  return (
+    <div>
+      <div style={{maxWidth: 450, margin: '0 auto'}}>
+        <RegisterForm onSubmit={registerIfNeeded}/>
       </div>
-    )
-  }
-}
+      <Snackbar
+        open={error !== null}
+        message={errorMessage(error)}
+        autoHideDuration={4000}
+        onRequestClose={onRegisterClear}
+      />
+      <Snackbar
+        open={newUserId !== null}
+        message={'Register success!'}
+        action='Login'
+        autoHideDuration={4000}
+        onActionClick={pushLoginAndClear}
+        onRequestClose={pushLoginAndClear}
+      />
+    </div>
+  )
+};
 
 export default connect(
   state => ({...state.register}),
