@@ -1,5 +1,5 @@
-import { error as $error } from 'falcor-json-graph';
-import {createSaltedPassword} from "../libaries/internal/jsonWebToken/index";
+import { error as $error, atom as $atom } from 'falcor-json-graph';
+import {createSaltedPassword, createToken} from "../libaries/internal/jsonWebToken/index";
 import User from "../services/mongooseService/User";
 
 const MONGODB_DUPLICATE_KEY = 11000;
@@ -9,10 +9,14 @@ const session = [
     route: 'register',
     call: async (callPath, params) => {
 
-      const [userInfo] = params;
-      userInfo.role = userInfo.role || 'editor';
-      userInfo.password = createSaltedPassword(userInfo.password);
-      const user = new User(userInfo);
+      const [{ username, password, email, role }] = params;
+
+      const user = new User({
+        username,
+        password: createSaltedPassword(password),
+        email,
+        role: role || 'editor'
+      });
 
       try {
         const savedUser = await user.save();
@@ -31,6 +35,42 @@ const session = [
           default:
             throw error;
         }
+      }
+    }
+  },
+  {
+    route: 'login',
+    call: async (callPath, params) => {
+
+      const [{ username, password }] = params;
+      const saltedPassword = createSaltedPassword(password);
+      const user = await User.findOne(
+        { $and: [{ username }, { password: saltedPassword}] },
+        { _id: 1, username: 1, role: 1, email: 1, }
+      );
+
+      if (user) {
+        return [
+          {
+            path: ['login', 'user'],
+            value: $atom(user.toObject())
+          },
+          {
+            path: ['login', 'token'],
+            value: createToken(username, user.role)
+          }
+        ]
+      } else {
+        return [
+          {
+            path: ['login', 'user'],
+            value: $error('Username or Password is incorrect.')
+          },
+          {
+            path: ['login', 'token'],
+            value: null
+          }
+        ]
       }
     }
   }

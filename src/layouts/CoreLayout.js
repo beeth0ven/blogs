@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 import {AppBar, RaisedButton} from "material-ui";
 import {Link} from "react-router";
 import {ActionHome} from "material-ui/svg-icons/index.es";
+import {connect} from "react-redux";
+import {pullLoginStateFromLocalStorage} from "../actions/login";
 
 class CoreLayout extends Component {
+
+  componentDidMount() {
+    this.props.pullLoginStateFromLocalStorage()
+  }
 
   styles = {
     homeButton: {
@@ -20,16 +26,14 @@ class CoreLayout extends Component {
     </Link>
   );
 
-  isUserLoggedIn = () => false;
-
-  menuLinks = () => this.isUserLoggedIn()
+  menuLinks = () => this.props.isUserLoggedIn
     ? this.logoutLinks()
     : this.loginLinks();
 
   loginLinks = () => (
     <span>
       <Link to='/login'>
-        <RaisedButton label='Login' style={this.styles.menuButton} />
+        <RaisedButton label='Login' style={this.styles.menuButton}/>
       </Link>
       <Link to='/register'>
         <RaisedButton label='Register' style={this.styles.menuButton}/>
@@ -40,10 +44,10 @@ class CoreLayout extends Component {
   logoutLinks = () => (
     <span>
       <Link to='/dashboard'>
-        <RaisedButton label='Dashboard'/>
+        <RaisedButton label='Dashboard' style={this.styles.menuButton}/>
       </Link>
       <Link to='/logout'>
-        <RaisedButton label='Loggout'/>
+        <RaisedButton label='Logout' style={this.styles.menuButton}/>
       </Link>
     </span>
   );
@@ -63,5 +67,8 @@ class CoreLayout extends Component {
   }
 }
 
-export default CoreLayout;
+export default connect(
+  state => ({ isUserLoggedIn: state.login.user !== null }),
+  ({ pullLoginStateFromLocalStorage })
+)(CoreLayout);
 

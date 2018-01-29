@@ -25,18 +25,16 @@ const onRegisterClear = () => ({
 
 const registerIfNeeded = (formInfo) => async (dispatch, getState) => {
   const shouldRegister = !getState().register.isExecuting;
-  if (shouldRegister) {
-    dispatch(onRegisterExecuting());
+  if (!shouldRegister) { return }
 
-    try {
-      await falcorModel.call('register', [formInfo]);
-      const newUserId = await falcorModel.getValue('register.newUserId');
+  dispatch(onRegisterExecuting());
 
-      dispatch(onRegisterSuccess(newUserId));
-
-    } catch (error) {
-      dispatch(onRegisterError(error));
-    }
+  try {
+    await falcorModel.call('register', [formInfo]);
+    const newUserId = await falcorModel.getValue('register.newUserId');
+    dispatch(onRegisterSuccess(newUserId));
+  } catch (error) {
+    dispatch(onRegisterError(error));
   }
 };
 

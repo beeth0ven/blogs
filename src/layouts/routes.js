@@ -5,6 +5,7 @@ import App from "../views/App";
 import LoginView from "../views/LoginView";
 import Dashboard from "../views/Dashboard";
 import Register from "../views/RegisterView";
+import LogoutView from "../views/LogoutView";
 
 const routes = (
     <Route component={CoreLayout} path='/'>
@@ -12,6 +13,7 @@ const routes = (
       <Route component={Dashboard} path='dashboard' name='dashboard'/>
       <Route component={LoginView} path='login' name='login'/>
       <Route component={Register} path='register' name='register'/>
+      <Route component={LogoutView} path='logout' name='logout'/>
     </Route>
 );
 
