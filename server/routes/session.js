@@ -4,7 +4,7 @@ import User from "../services/mongooseService/User";
 
 const MONGODB_DUPLICATE_KEY = 11000;
 
-const session = [
+const session = (request, response) => [
   {
     route: 'register',
     call: async (callPath, params) => {
@@ -20,10 +20,9 @@ const session = [
 
       try {
         const savedUser = await user.save();
-        const newUserId = savedUser.toObject()._id.toString();
         return {
           path: ['register', 'newUserId'],
-          value: newUserId
+          value: savedUser.toObject()._id.toString()
         }
       } catch (error) {
         switch (error.code) {
@@ -46,7 +45,7 @@ const session = [
       const saltedPassword = createSaltedPassword(password);
       const user = await User.findOne(
         { $and: [{ username }, { password: saltedPassword}] },
-        { _id: 1, username: 1, role: 1, email: 1, }
+        ['_id', 'username', 'role', 'email']
       );
 
       if (user) {

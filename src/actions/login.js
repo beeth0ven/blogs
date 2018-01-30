@@ -1,4 +1,5 @@
-import falcorModel from "../falcorModel";
+import falcorModel from "../services/falcorModel";
+import * as localStorageService from "../services/localStorageService";
 
 const ON_LOGIN_EXECUTING = 'ON_LOGIN_EXECUTING';
 const ON_LOGIN_SUCCESS = 'ON_LOGIN_SUCCESS';
@@ -31,13 +32,9 @@ const loginIfNeeded = (formInfo) => async (dispatch, getState) => {
     await falcorModel.call('login', [formInfo]);
     const user = await falcorModel.getValue('login.user');
     const token = await falcorModel.getValue('login.token');
-    console.log('user', user);
-    console.log('token', token);
     dispatch(onLoginSuccess(user));
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('token', token);
+    localStorageService.saveUserAndToken(user, token);
   } catch (error) {
-    console.error('login error', error);
     dispatch(onLoginError(error));
   }
 };
@@ -47,18 +44,15 @@ const logoutIfNeeded = () => (dispatch, getState) => {
   const shouldLogout = !state.isExecuting && state.user !== null;
   if (!shouldLogout) { return }
   dispatch(onLoginClear());
-  localStorage.removeItem('user');
-  localStorage.removeItem('token');
+  localStorageService.clearUserAndToken()
 };
 
 const pullLoginStateFromLocalStorage = () => (dispatch, getState) => {
   const state = getState().login;
   const shouldPull = !state.isExecuting;
   if (!shouldPull) { return }
-  const userString = localStorage.getItem('user');
-  const token = localStorage.getItem('token');
-  if (userString && token) {
-    const user = JSON.parse(userString);
+  const { user, token } = localStorageService.getUserAndToken();
+  if (user && token) {
     dispatch(onLoginSuccess(user));
   } else {
     dispatch(onLoginClear())

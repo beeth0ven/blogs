@@ -1,8 +1,13 @@
-import falcorModel from '../falcorModel';
-import {newMapFromObject} from "../libaries/public/map";
+import falcorModel from '../services/falcorModel';
 
+const ON_FETCH_ARTICLES_EXECUTING = 'ON_FETCH_ARTICLES_EXECUTING';
 const ON_FETCH_ARTICLES_SUCCESS = 'ON_FETCH_ARTICLES_SUCCESS';
 const ON_FETCH_ARTICLES_ERROR = 'ON_FETCH_ARTICLES_ERROR';
+const ON_FETCH_ARTICLES_CLEAR = 'ON_FETCH_ARTICLES_CLEAR';
+
+const onFetchArticlesExecuting = () => ({
+  type: ON_FETCH_ARTICLES_EXECUTING,
+});
 
 const onFetchArticlesSuccess = (articles) => ({
   type: ON_FETCH_ARTICLES_SUCCESS,
@@ -12,6 +17,10 @@ const onFetchArticlesSuccess = (articles) => ({
 const onFetchArticlesError = (error) => ({
   type: ON_FETCH_ARTICLES_ERROR,
   error
+});
+
+const onFetchArticlesClear = () => ({
+  type: ON_FETCH_ARTICLES_CLEAR,
 });
 
 const fetchArticles = () => async (dispatch) => {
@@ -26,19 +35,23 @@ const fetchArticles = () => async (dispatch) => {
       ['_id', 'title', 'content']
     ]).then(response => response.json.articles);
 
-    const articlesMap = newMapFromObject(articlesByIndex);
 
-    dispatch(onFetchArticlesSuccess(articlesMap))
+    dispatch(onFetchArticlesSuccess(articlesByIndex))
 
   } catch (error) {
-    dispatch(onFetchArticlesError(error))
+
+    dispatch(onFetchArticlesError(error));
   }
 };
 
 export {
+  ON_FETCH_ARTICLES_EXECUTING,
   ON_FETCH_ARTICLES_SUCCESS,
   ON_FETCH_ARTICLES_ERROR,
+  ON_FETCH_ARTICLES_CLEAR,
+  onFetchArticlesExecuting,
   onFetchArticlesSuccess,
   onFetchArticlesError,
-  fetchArticles
+  onFetchArticlesClear,
+  fetchArticles,
 }

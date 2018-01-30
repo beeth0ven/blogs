@@ -12,16 +12,12 @@ const createSaltedPassword = (password) => {
 
 const createToken = (username, role) => {
   const tokenInfo = { username, role };
-  return jsonWebToken.sign(tokenInfo, secret)
+  return jsonWebToken.sign(tokenInfo, secret, { expiresIn: 30 })
 };
 
-const validToken = (username, role, token) => {
-  const correct = createToken(username, role);
-  return token === correct;
+const verifyToken = (bearerToken) => {
+  const parsedToken = bearerToken ? bearerToken.split(' ')[1] : null;
+  return jsonWebToken.verify(parsedToken, secret);
 };
 
-const decodeToken = (token) => {
-  return jsonWebToken.decode(token, secret)
-};
-
-export { createSaltedPassword, createToken, validToken, decodeToken };
+export { createSaltedPassword, createToken, verifyToken };

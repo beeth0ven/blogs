@@ -3,6 +3,6 @@ import Router from 'falcor-router';
 import routes from "../routes";
 
 const dataSourceRoute = FalcorExpress
-  .dataSourceRoute((request, response) => new Router(routes));
+  .dataSourceRoute((request, response) => new Router(routes(request, response)));
 
 export { dataSourceRoute };

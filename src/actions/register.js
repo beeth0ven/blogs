@@ -1,4 +1,4 @@
-import falcorModel from '../falcorModel';
+import falcorModel from '../services/falcorModel';
 
 const ON_REGISTER_EXECUTING = 'ON_REGISTER_EXECUTING';
 const ON_REGISTER_SUCCESS   = 'ON_REGISTER_SUCCESS';

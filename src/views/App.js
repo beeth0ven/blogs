@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {fetchArticles} from "../actions/article";
+import {fetchArticles, onFetchArticlesClear} from "../actions/article";
 import {newArrayFromMap} from "../libaries/public/map";
+import {Snackbar} from "material-ui";
+import {errorMessage} from "../libaries/public/error";
+import {AUTO_HIDE_DURATION} from "../config";
 
 class App extends Component {
 
@@ -21,12 +24,18 @@ class App extends Component {
   );
 
   render() {
-    const { articles } = this.props;
+    const { articles, error, onFetchArticlesClear } = this.props;
 
     return (
       <div>
         <h1>Publishing App</h1>
         {newArrayFromMap(articles, this.articleJSX)}
+        <Snackbar
+          open={error !== null}
+          message={errorMessage(error)}
+          autoHideDuration={AUTO_HIDE_DURATION}
+          onRequestClose={onFetchArticlesClear}
+        />
       </div>
     )
   }
@@ -34,5 +43,5 @@ class App extends Component {
 
 export default connect(
   (state) => ({...state.article}),
-  { fetchArticles }
+  { fetchArticles, onFetchArticlesClear }
 )(App);

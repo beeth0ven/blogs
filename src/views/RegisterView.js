@@ -5,6 +5,7 @@ import {onRegisterClear, registerIfNeeded} from "../actions/register";
 import {Snackbar} from "material-ui";
 import {errorMessage} from "../libaries/public/error";
 import {pushLogin} from "../actions/router";
+import {AUTO_HIDE_DURATION} from "../config";
 
 const RegisterView = ({ newUserId, error, registerIfNeeded, onRegisterClear, pushLogin }) => {
 
@@ -21,14 +22,14 @@ const RegisterView = ({ newUserId, error, registerIfNeeded, onRegisterClear, pus
       <Snackbar
         open={error !== null}
         message={errorMessage(error)}
-        autoHideDuration={4000}
+        autoHideDuration={AUTO_HIDE_DURATION}
         onRequestClose={onRegisterClear}
       />
       <Snackbar
         open={newUserId !== null}
         message={'Register success!'}
         action='Login'
-        autoHideDuration={4000}
+        autoHideDuration={AUTO_HIDE_DURATION}
         onActionClick={pushLoginAndClear}
         onRequestClose={pushLoginAndClear}
       />
