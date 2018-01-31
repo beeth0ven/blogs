@@ -12,11 +12,11 @@ const createSaltedPassword = (password) => {
 
 const createToken = (username, role) => {
   const tokenInfo = { username, role };
-  return jsonWebToken.sign(tokenInfo, secret, { expiresIn: 30 })
+  return jsonWebToken.sign(tokenInfo, secret, { expiresIn: 24 * 3600 })
 };
 
 const verifyToken = (bearerToken) => {
-  const parsedToken = bearerToken ? bearerToken.split(' ')[1] : null;
+  const [_, schema, parsedToken] = bearerToken.match(/^(\S+)\s+(\S+)$/);
   return jsonWebToken.verify(parsedToken, secret);
 };
 

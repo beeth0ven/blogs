@@ -9,7 +9,7 @@ class AppHttpDataSource extends FalcorHttpDataSource {
     const { user, token } = localStorageService.getUserAndToken();
     if (user && token) {
       config.headers['authorization'] = `Bearer ${token}`;
-      console.info('token', token);
+      // console.info('token', token);
     }
   }
 }
