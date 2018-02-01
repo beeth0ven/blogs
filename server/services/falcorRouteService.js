@@ -2,7 +2,7 @@ import FalcorExpress from 'falcor-express';
 import Router from 'falcor-router';
 import routes from "../routes";
 
-const dataSourceRoute = FalcorExpress
+const falcorRouteService = FalcorExpress
   .dataSourceRoute((request, response) => new Router(routes(request, response)));
 
-export { dataSourceRoute };
+export default falcorRouteService;

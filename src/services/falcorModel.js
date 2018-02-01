@@ -15,5 +15,7 @@ class AppHttpDataSource extends FalcorHttpDataSource {
 }
 
 export default new Model({
-  source: new AppHttpDataSource('/model.json')
+  source: new AppHttpDataSource('http://localhost:3000/model.json', {
+    crossDomain: true
+  })
 });
