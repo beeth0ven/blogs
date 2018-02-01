@@ -2,7 +2,7 @@ import {
   ON_FETCH_ARTICLES_CLEAR, ON_FETCH_ARTICLES_ERROR, ON_FETCH_ARTICLES_EXECUTING,
   ON_FETCH_ARTICLES_SUCCESS
 } from "../actions/article";
-import {newMapFromObject} from "../libaries/public/map";
+import {newMapFromFalcorObject} from "../libaries/public/map";
 
 const empty = {
   articles: new Map(),
@@ -19,7 +19,7 @@ const articleReducer = (state = empty, action) => {
         error: null
       };
     case ON_FETCH_ARTICLES_SUCCESS:
-      const articles = newMapFromObject(action.data);
+      const articles = newMapFromFalcorObject(action.data);
       return {
         articles,
         isExecuting: false,
