@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Avatar, List, ListItem, RaisedButton} from "material-ui";
 import {DEFAULT_ARTICLE_IMAGE} from "../config";
 import {newArrayFromMap} from "../libaries/public/map";
+import {Link} from "react-router";
 
 const styles = {
   rootDiv:  {
@@ -31,11 +32,13 @@ const Dashboard = ({ articles }) => (
     <List>
       {newArrayFromMap(articles, ItemJSX)}
     </List>
-    <RaisedButton
-      style={styles.addButton}
-      secondary={true}
-      label={'New Article'}
-    />
+    <Link to='/newArticle'>
+      <RaisedButton
+        style={styles.addButton}
+        secondary={true}
+        label={'New Article'}
+      />
+    </Link>
   </div>
 );
 

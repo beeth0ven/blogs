@@ -1,6 +1,6 @@
 
 import Article from "../services/mongooseService/Article";
-import { ref as $ref, error as $error } from 'falcor-json-graph';
+import { ref as $ref, error as $error, atom as $atom } from 'falcor-json-graph';
 import {verifyToken} from "../libaries/internal/jsonWebToken/index";
 
 const withAuthorization = async ({ path, bearerToken, asyncTry, catchError }) => {
@@ -80,6 +80,34 @@ const article = (request, response) => {
           },
           catchError: error => "can't get articles, please try again."
         })
+    },
+    {
+      route: 'article.new',
+      call:  async (callPath, params) => await withAuthorization({
+        path: ['article', 'new'],
+        bearerToken,
+        asyncTry: async ({ username, role }) => {
+          const [articleObject] = params;
+          const article = new Article(articleObject);
+          const savedArticle = await article.save();
+          const count = await Article.count();
+          console.log('articleObject', articleObject);
+          console.log('article', article);
+          console.log('savedArticle', savedArticle);
+          console.log('count', count);
+          return [
+            {
+              path: ['article', 'new', '_id'],
+              value: savedArticle._id.toString()
+            },
+            {
+              path: ['article', 'length'],
+              value: count
+            }
+          ]
+        },
+        catchError: error => "can't create new article."
+      })
     }
   ]
 };
