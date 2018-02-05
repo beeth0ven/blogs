@@ -6,7 +6,11 @@ import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
 import ContentEditor from "../../components/article/ContentEditor";
 import {contentRawFromEditorState} from "../../libaries/public/draft";
-import {saveNewArticleIfNeeded} from "../../actions/newArticle";
+import {onNewArticleClear, saveNewArticleIfNeeded} from "../../actions/newArticle";
+import {errorMessage} from "../../libaries/public/error";
+import {pushDashboard} from "../../actions/router";
+import PromiseSnackbar from "../../components/PromiseSnackbar";
+
 
 class NewArticleView extends Component {
 
@@ -39,7 +43,14 @@ class NewArticleView extends Component {
 
   };
 
+  pushDashboard = () => {
+    const { onNewArticleClear, pushDashboard } = this.props;
+    onNewArticleClear();
+    pushDashboard();
+  };
+
   render() {
+    const { value, error, onNewArticleClear } = this.props;
 
     return (
       <div style={{maxWidth: 600, margin: 'auto'}}>
@@ -74,6 +85,15 @@ class NewArticleView extends Component {
             />
           </div>
 
+          <PromiseSnackbar
+            error={error}
+            errorMessage={errorMessage(error)}
+            onRequestErrorClose={onNewArticleClear}
+            value={value}
+            valueMessage={`Article saved with id: ${value}`}
+            onRequestValueClose={this.pushDashboard}
+          />
+
         </Formsy>
       </div>
     )
@@ -82,5 +102,5 @@ class NewArticleView extends Component {
 
 export default connect(
   state => ({...state.newArticle}),
-  ({saveNewArticleIfNeeded})
+  ({saveNewArticleIfNeeded, onNewArticleClear, pushDashboard})
 )(NewArticleView);

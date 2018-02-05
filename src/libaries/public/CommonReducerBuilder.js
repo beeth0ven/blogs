@@ -1,19 +1,18 @@
 
 class CommonReducerBuilder {
 
-  constructor({path, defaultElement}) {
-    this.defaultElement = defaultElement;
-    this.ON_EXECUTING  = `@${path}/ON_EXECUTING`;
-    this.ON_SUCCESS    = `@${path}/ON_SUCCESS`;
-    this.ON_ERROR      = `@${path}/ON_ERROR`;
-    this.ON_CLEAR      = `@${path}/ON_CLEAR`;
+  constructor({path, defaultValue}) {
+    this.defaultValue = defaultValue;
+    this.ON_EXECUTING   = `@${path}/ON_EXECUTING`;
+    this.ON_SUCCESS     = `@${path}/ON_SUCCESS`;
+    this.ON_ERROR       = `@${path}/ON_ERROR`;
+    this.ON_CLEAR       = `@${path}/ON_CLEAR`;
+    this.empty          =  {
+      value: defaultValue,
+      isExecuting: false,
+      error: null
+    };
   }
-
-  empty =  {
-    element: this.defaultElement,
-    isExecuting: false,
-    error: null
-  };
 
   createActions = () => ({
     onExecuting: () => ({
@@ -36,29 +35,28 @@ class CommonReducerBuilder {
     switch (action.type) {
       case this.ON_EXECUTING:
         return {
-          element: this.defaultElement,
+          value: this.defaultValue,
           isExecuting: true,
           error: null
         };
       case this.ON_SUCCESS:
         return {
-          element: action.data,
+          value: action.data,
           isExecuting: true,
           error: null
         };
       case this.ON_ERROR:
         return {
-          element: null,
+          value: null,
           isExecuting: true,
           error: action.error
         };
       case this.ON_CLEAR:
-        return empty;
+        return this.empty;
       default:
         return state;
     }
   }
-
 }
 
 

@@ -4,7 +4,7 @@ import {fetchArticles, onFetchArticlesClear} from "../actions/article";
 import {newArrayFromMap} from "../libaries/public/map";
 import {Card, CardMedia, CardTitle, Snackbar} from "material-ui";
 import {errorMessage} from "../libaries/public/error";
-import {AUTO_HIDE_DURATION, DEFAULT_ARTICLE_IMAGE} from "../config";
+import {DEFAULT_AUTO_HIDE_DURATION, DEFAULT_ARTICLE_IMAGE} from "../config";
 
 class App extends Component {
 
@@ -35,7 +35,7 @@ class App extends Component {
         <Snackbar
           open={error !== null}
           message={errorMessage(error)}
-          autoHideDuration={AUTO_HIDE_DURATION}
+          autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
           onRequestClose={onFetchArticlesClear}
         />
       </div>

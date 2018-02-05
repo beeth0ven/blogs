@@ -5,7 +5,7 @@ import {loginIfNeeded, onLoginClear} from "../actions/login";
 import {Snackbar} from "material-ui";
 import {errorMessage} from "../libaries/public/error";
 import {pushDashboard} from "../actions/router";
-import {AUTO_HIDE_DURATION} from "../config";
+import {DEFAULT_AUTO_HIDE_DURATION} from "../config";
 
 
 const LoginView = ({ user, error, loginIfNeeded, onLoginClear, pushDashboard }) => (
@@ -16,14 +16,14 @@ const LoginView = ({ user, error, loginIfNeeded, onLoginClear, pushDashboard }) 
     <Snackbar
       open={error !== null}
       message={errorMessage(error)}
-      autoHideDuration={AUTO_HIDE_DURATION}
+      autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
       onRequestClose={onLoginClear}
     />
     <Snackbar
       open={user !== null}
       message='Login success!'
       action='Dashboard'
-      autoHideDuration={AUTO_HIDE_DURATION}
+      autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
       onActionClick={pushDashboard}
       onRequestClose={pushDashboard}
     />
