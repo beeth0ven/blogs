@@ -1,50 +1,42 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {EditorState, Editor, convertToRaw} from "draft-js";
+import {EditorState} from "draft-js";
 import {RaisedButton} from "material-ui";
-import falcorModel from "../../services/falcorModel";
 import Formsy from 'formsy-react';
-import editorStyles from './EditorStyles';
 import DefaultInput from "../../components/DefaultInput";
+import ContentEditor from "../../components/article/ContentEditor";
+import {contentRawFromEditorState} from "../../libaries/public/draft";
+import {saveNewArticleIfNeeded} from "../../actions/newArticle";
 
 class NewArticleView extends Component {
 
   constructor() {
     super();
 
-    const initialValue = '123';
-
     this.state = {
       editorState: EditorState.createEmpty()
     }
   }
 
-  onChange = (editorState) => {
+  onEditorStateChange = (editorState) => {
     this.setState({editorState});
   };
 
   onSubmit = async (formInfo) => {
-    console.log('onSubmit');
+    console.log('onSubmit', formInfo);
 
-    const content = this.state.editorState.getCurrentContent();
-    const contentRaw = convertToRaw(content);
+    const contentRaw = contentRawFromEditorState(this.state.editorState);
 
     const articleInfo = {
       ...formInfo,
       contentRaw
     };
 
-    console.log('content', content);
     console.log('contentRaw', contentRaw);
     console.log('articleInfo', articleInfo);
 
-    try {
-      await falcorModel.call(['article', 'new'], [articleInfo]);
-      const newArticleId = await falcorModel.getValue(['article', 'new', '_id']);
-      console.log('newArticleId', newArticleId);
-    } catch (error) {
-      console.error(error);
-    }
+    this.props.saveNewArticleIfNeeded(articleInfo);
+
   };
 
   render() {
@@ -68,14 +60,10 @@ class NewArticleView extends Component {
             required
           />
 
-          <div style={editorStyles.editorDiv} onClick={() => this.refs.editor.focus()} >
-            <Editor
-              style={editorStyles.editor}
-              editorState={this.state.editorState}
-              onChange={this.onChange}
-              ref={'editor'}
-            />
-          </div>
+          <ContentEditor
+            editorState={this.state.editorState}
+            onEditorStateChange={this.onEditorStateChange}
+          />
 
           <div style={{marginTop: 24}}>
             <RaisedButton
@@ -93,5 +81,6 @@ class NewArticleView extends Component {
 }
 
 export default connect(
-  state => ({})
+  state => ({...state.newArticle}),
+  ({saveNewArticleIfNeeded})
 )(NewArticleView);
