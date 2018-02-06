@@ -91,10 +91,6 @@ const article = (request, response) => {
           const article = new Article(articleObject);
           const savedArticle = await article.save();
           const count = await Article.count();
-          console.log('articleObject', articleObject);
-          console.log('article', article);
-          console.log('savedArticle', savedArticle);
-          console.log('count', count);
           return [
             {
               path: ['article', 'new', '_id'],
@@ -107,6 +103,24 @@ const article = (request, response) => {
           ]
         },
         catchError: error => "can't create new article."
+      })
+    },
+    {
+      route: 'article.update',
+      call: async (callPath, params) => await withAuthorization({
+        path: ['article', 'update'],
+        bearerToken,
+        asyncTry: async ({ username, role }) => {
+          const [articleObject] = params;
+          const article = new Article(articleObject);
+          await article.save();
+          return {
+            path: ['articlesById', articleObject._id],
+            invalidated: true
+          }
+
+        },
+        catchError: error => "can't update article."
       })
     }
   ]

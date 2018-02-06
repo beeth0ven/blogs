@@ -7,6 +7,7 @@ import Dashboard from "../views/Dashboard";
 import Register from "../views/RegisterView";
 import LogoutView from "../views/LogoutView";
 import NewArticleView from "../views/ariticle/NewArticleView";
+import UpdateArticleView from "../views/ariticle/UpdateArticleView";
 
 const routes = (
     <Route component={CoreLayout} path='/'>
@@ -16,6 +17,7 @@ const routes = (
       <Route component={Register} path='register' name='register'/>
       <Route component={LogoutView} path='logout' name='logout'/>
       <Route component={NewArticleView} path='newArticle' name='newArticle'/>
+      <Route component={UpdateArticleView} path='updateArticle/:_id' name='updateArticle'/>
     </Route>
 );
 

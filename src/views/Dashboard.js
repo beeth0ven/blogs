@@ -19,12 +19,13 @@ const styles = {
 };
 
 const ItemJSX = (key, article) => (
-  <ListItem
-    key={key}
-    leftAvatar={<Avatar src={DEFAULT_ARTICLE_IMAGE} />}
-    primaryText={article.title}
-    secondaryText={article.content}
-  />
+  <Link key={key} to={`/updateArticle/${key}`}>
+    <ListItem
+      leftAvatar={<Avatar src={DEFAULT_ARTICLE_IMAGE} />}
+      primaryText={article.title}
+      secondaryText={article.content}
+    />
+  </Link>
 );
 
 const Dashboard = ({ articles }) => (
