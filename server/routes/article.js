@@ -66,17 +66,21 @@ const article = (request, response) => {
         })
     },
     {
-      route: 'articlesById[{keys}]["_id", "title", "content"]',
+      route: 'articlesById[{keys}]["_id", "title", "content", "contentRaw"]',
       get: async (pathSet) => await withAuthorization({
           path: ['articlesById'],
           bearerToken,
           asyncTry: async ({ username, role }) => {
             const _ids = pathSet[1];
             const articles = await Article.find({ _id: { $in: _ids } });
-            return articles.map(article => ({
-              path: ['articlesById', article._id.toString()],
-              value: article.toObject()
-            }))
+            return articles.map(article => {
+              const articleObject = article.toObject();
+              articleObject.contentRaw = $atom(articleObject.contentRaw);
+              return {
+                path: ['articlesById', articleObject._id.toString()],
+                value: articleObject
+              }
+            })
           },
           catchError: error => "can't get articles, please try again."
         })

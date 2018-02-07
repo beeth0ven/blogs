@@ -1,8 +1,13 @@
-import {convertToRaw} from 'draft-js';
+import {convertToRaw, convertFromRaw, ContentState, EditorState} from 'draft-js';
 
 const contentRawFromEditorState = (editorState) => {
   const content = editorState.getCurrentContent();
-  return convertToRaw(content)
+  return convertToRaw(content);
 };
 
-export {contentRawFromEditorState};
+const editorStateFromContentRaw = (contentRaw) => {
+  const content = convertFromRaw(contentRaw);
+  return EditorState.createWithContent(content);
+};
+
+export {contentRawFromEditorState, editorStateFromContentRaw};

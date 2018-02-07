@@ -4,21 +4,22 @@ import {TextField} from "material-ui";
 
 class DefaultInput extends Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    const { initialValue } = this.props;
     this.state = {
-      text: ''
+      text: initialValue || ''
     }
   };
 
   onTextFieldChange = (event) => {
-    this.setState({text: event.target.value});
-    this.props.setValue(event.target.value);
+    const text = event.target.value;
+    this.setState({text});
+    this.props.setValue(text);
   };
 
   render() {
-    const { name, title, required, type, defaultValue } = this.props;
+    const { name, title, required, type } = this.props;
     return (
       <div>
         <TextField
@@ -28,8 +29,7 @@ class DefaultInput extends Component {
           onChange={this.onTextFieldChange}
           required={required}
           type={type}
-          value={this.state.text || ''}
-          defaultValue={defaultValue}
+          value={this.state.text}
         />
         {this.props.children}
       </div>

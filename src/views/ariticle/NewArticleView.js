@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {EditorState} from "draft-js";
+// import {EditorState} from "draft-js";
 import {RaisedButton} from "material-ui";
 import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
@@ -10,6 +10,7 @@ import {onNewArticleClear, saveNewArticleIfNeeded} from "../../actions/newArticl
 import {errorMessage} from "../../libaries/public/error";
 import {pushDashboard} from "../../actions/router";
 import PromiseSnackbar from "../../components/PromiseSnackbar";
+import {EditorState} from "draft-js";
 
 
 class NewArticleView extends Component {

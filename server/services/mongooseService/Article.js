@@ -1,18 +1,28 @@
 import mongoose, { Schema } from 'mongoose';
 
-const schema = new Schema({
-  title: {
-    type: String,
-    require: true
+const schema = new Schema(
+  {
+    title: {
+      type: String,
+      require: true
+    },
+    content: {
+      type: String,
+      require: true
+    },
+    contentRaw: {
+      type: Object,
+      require: true,
+      default: {
+        blocks: [],
+        entityMap: {}
+      }
+    }
   },
-  content: {
-    type: String,
-    require: true
-  },
-  contentRaw: {
-    type: Object
+  {
+    minimize: false
   }
-});
+);
 
 const Article = mongoose.model('Article', schema, 'articles');
 

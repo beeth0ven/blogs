@@ -1,8 +1,19 @@
 import {
+  ON_ADDED_ARTICLE, ON_DELETED_ARTICLE,
   ON_FETCH_ARTICLES_CLEAR, ON_FETCH_ARTICLES_ERROR, ON_FETCH_ARTICLES_EXECUTING,
-  ON_FETCH_ARTICLES_SUCCESS
+  ON_FETCH_ARTICLES_SUCCESS, ON_UPDATED_ARTICLE
 } from "../actions/article";
-import {newMapFromFalcorObject} from "../libaries/public/map";
+import {} from "../libaries/public/map";
+import Falcor from 'falcor';
+
+const newArticlesMap = (data) => Falcor.keys(data)
+  .reduce((articlesMap, key) => {
+    const article = data[key];
+    return new Map([
+      ...articlesMap,
+      [article._id, article]
+    ])
+  } , new Map());
 
 const empty = {
   articles: new Map(),
@@ -19,7 +30,7 @@ const articleReducer = (state = empty, action) => {
         error: null
       };
     case ON_FETCH_ARTICLES_SUCCESS:
-      const articles = newMapFromFalcorObject(action.data);
+      const articles = newArticlesMap(action.data);
       return {
         articles,
         isExecuting: false,
@@ -33,6 +44,32 @@ const articleReducer = (state = empty, action) => {
       };
     case ON_FETCH_ARTICLES_CLEAR:
       return empty;
+    case ON_ADDED_ARTICLE:
+      const newArticle = action.data;
+      return {
+        ...state,
+        articles: new Map([
+          ...state.articles,
+          [newArticle._id, newArticle]
+        ])
+      };
+    case ON_UPDATED_ARTICLE:
+      const updatedArticle = action.data;
+      return {
+        ...state,
+        articles: new Map([
+          ...state.articles,
+          [updatedArticle._id, updatedArticle]
+        ])
+      };
+    case ON_DELETED_ARTICLE:
+      let articlesMap = new Map([...state.articles]);
+      const deletedArticleId = action.data;
+      articlesMap.delete(deletedArticleId);
+      return {
+        ...state,
+        articles: articlesMap
+      };
     default:
       return state;
   }

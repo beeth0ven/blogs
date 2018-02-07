@@ -1,6 +1,7 @@
 
 import newArticleReducerBuilder from "../reducerBuilders/newArticleReducerBuilder";
 import falcorModel from '../services/falcorModel';
+import {onAddedArticle} from "./article";
 
 const { onExecuting, onSuccess, onError, onClear } = newArticleReducerBuilder.createActions();
 
@@ -11,7 +12,12 @@ const saveNewArticleIfNeeded = (articleInfo) => async (dispatch, getState) => {
   try {
     await falcorModel.call(['article', 'new'], [articleInfo]);
     const newArticleId = await falcorModel.getValue(['article', 'new', '_id']);
+    const newArticleObject = {
+      ...articleInfo,
+      _id: newArticleId
+    };
     dispatch(onSuccess(newArticleId));
+    dispatch(onAddedArticle(newArticleObject))
   } catch (error) {
     dispatch(onError(error));
   }
