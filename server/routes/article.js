@@ -8,6 +8,7 @@ const withAuthorization = async ({ path, bearerToken, asyncTry, catchError }) =>
     const { username, role } = verifyToken(bearerToken);
     return await asyncTry({ username, role })
   } catch (error) {
+    console.error(error);
     switch (error.name) {
       case 'TokenExpiredError':
         return {
@@ -117,12 +118,12 @@ const article = (request, response) => {
         asyncTry: async ({ username, role }) => {
           const [articleObject] = params;
           const article = new Article(articleObject);
+          article.isNew = false;
           await article.save();
           return {
             path: ['articlesById', articleObject._id],
             invalidated: true
           }
-
         },
         catchError: error => "can't update article."
       })

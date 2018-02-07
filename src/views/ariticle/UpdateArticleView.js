@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {Snackbar} from "material-ui";
+import {RaisedButton, Snackbar} from "material-ui";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 import {pushDashboard} from "../../actions/router";
 import {EditorState} from "draft-js";
 import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
 import ContentEditor from "../../components/article/ContentEditor";
-import {editorStateFromContentRaw} from "../../libaries/public/draft";
-
+import {contentRawFromEditorState, editorStateFromContentRaw} from "../../libaries/public/draft";
+import {updateArticleIfNeeded} from "../../actions/updateArticle";
 
 class UpdateArticleView extends Component {
 
@@ -19,19 +19,32 @@ class UpdateArticleView extends Component {
     const hasContent = (article && article.contentRaw);
 
     const editorState = hasContent
-      ? editorStateFromContentRaw({
-        ...article.contentRaw,
-        entityMap: {}
-      })
+      ? editorStateFromContentRaw(article.contentRaw)
       : EditorState.createEmpty();
 
     this.state = {
       editorState
     };
-
   }
 
   onSubmit = (formInfo) => {
+    console.info('formInfo', formInfo);
+
+    const { updateArticleIfNeeded, article } = this.props;
+    const { editorState } = this.state;
+
+    const _id = article._id;
+    const contentRaw = contentRawFromEditorState(editorState);
+
+    const articleInfo = {
+      _id,
+      ...formInfo,
+      contentRaw
+    };
+
+    console.info('articleInfo', articleInfo);
+
+    updateArticleIfNeeded(articleInfo);
 
   };
 
@@ -79,6 +92,15 @@ class UpdateArticleView extends Component {
             onEditorStateChange={this.onEditorStateChange}
           />
 
+          <div style={{marginTop: 24}}>
+            <RaisedButton
+              label='Update article'
+              type='submit'
+              style={{ width: 200, display: 'block', margin: 'auto' }}
+              secondary
+            />
+          </div>
+
         </Formsy>
       </div>
     )
@@ -100,5 +122,5 @@ export default connect(
       article
     }
   },
-  ({pushDashboard})
+  ({updateArticleIfNeeded, pushDashboard})
 )(UpdateArticleView);

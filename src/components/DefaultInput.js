@@ -9,7 +9,10 @@ class DefaultInput extends Component {
     const { initialValue } = this.props;
     this.state = {
       text: initialValue || ''
-    }
+    };
+
+    this.props.setValue(this.state.text);
+
   };
 
   onTextFieldChange = (event) => {

@@ -79,9 +79,9 @@ class NewArticleView extends Component {
 
           <div style={{marginTop: 24}}>
             <RaisedButton
-              style={{ width: 150, display: 'block',  margin: 'auto' }}
               label='Save article'
               type='submit'
+              style={{ width: 150, display: 'block',  margin: 'auto' }}
               secondary
             />
           </div>

@@ -8,3 +8,4 @@ const newArticleReducerBuilder = new CommonReducerBuilder({
 });
 
 export default newArticleReducerBuilder;
+
