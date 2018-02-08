@@ -8,6 +8,7 @@ import Register from "../views/RegisterView";
 import LogoutView from "../views/LogoutView";
 import NewArticleView from "../views/ariticle/NewArticleView";
 import UpdateArticleView from "../views/ariticle/UpdateArticleView";
+import TestView from "../views/TestView";
 
 const routes = (
     <Route component={CoreLayout} path='/'>
@@ -18,6 +19,7 @@ const routes = (
       <Route component={LogoutView} path='logout' name='logout'/>
       <Route component={NewArticleView} path='newArticle' name='newArticle'/>
       <Route component={UpdateArticleView} path='updateArticle/:_id' name='updateArticle'/>
+      <Route component={TestView} path='test' name='test'/>
     </Route>
 );
 

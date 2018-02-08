@@ -96,14 +96,19 @@ const article = (request, response) => {
           const article = new Article(articleObject);
           const savedArticle = await article.save();
           const count = await Article.count();
+          const newArticleId = savedArticle._id.toString();
           return [
             {
               path: ['article', 'new', '_id'],
-              value: savedArticle._id.toString()
+              value: newArticleId
             },
             {
-              path: ['article', 'length'],
+              path: ['articles', 'length'],
               value: count
+            },
+            {
+              path: ['articles', count-1],
+              value: $ref(['articlesById', newArticleId])
             }
           ]
         },
@@ -126,6 +131,31 @@ const article = (request, response) => {
           }
         },
         catchError: error => "can't update article."
+      })
+    },
+    {
+      route: 'article.delete',
+      call: async (callPath, params) => await withAuthorization({
+        path: ['article', 'delete'],
+        bearerToken,
+        asyncTry: async ({ username, role }) => {
+          const [id] = params;
+          console.info('id', id);
+          const result = await Article.findByIdAndRemove(id);
+          console.info('result', result);
+          const count = await Article.count();
+          return [
+            {
+              path: ['articlesById', id],
+              invalidated: true
+            },
+            {
+              path: ['article', 'length'],
+              value: count
+            }
+          ]
+        },
+        catchError: error => "can't delete article."
       })
     }
   ]

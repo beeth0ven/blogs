@@ -8,7 +8,11 @@ import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
 import ContentEditor from "../../components/article/ContentEditor";
 import {contentRawFromEditorState, editorStateFromContentRaw} from "../../libaries/public/draft";
-import {updateArticleIfNeeded} from "../../actions/updateArticle";
+import {onUpdateArticleClear, updateArticleIfNeeded} from "../../actions/updateArticle";
+import {errorMessage} from "../../libaries/public/error";
+import {deleteArticleIfNeeded, onDeleteArticleClear} from "../../actions/deleteArticle";
+import DashView from "../DashView";
+import ConfirmButton from "../../components/ConfirmButton";
 
 class UpdateArticleView extends Component {
 
@@ -22,9 +26,13 @@ class UpdateArticleView extends Component {
       ? editorStateFromContentRaw(article.contentRaw)
       : EditorState.createEmpty();
 
-    this.state = {
-      editorState
-    };
+    this.state = { editorState };
+  }
+
+  componentWillUnmount() {
+    const { onUpdateArticleClear, onDeleteArticleClear } = this.props;
+    onUpdateArticleClear();
+    onDeleteArticleClear();
   }
 
   onSubmit = (formInfo) => {
@@ -52,20 +60,36 @@ class UpdateArticleView extends Component {
     this.setState({editorState});
   };
 
-  notFoundJSX = () => {
-    const { pushDashboard } = this.props;
-    return (
-      <Snackbar
-        open={true}
-        message={'Article not found!'}
-        autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
-        onRequestClose={pushDashboard}
-      />
-    )
+  onConfirmDelete = () => {
+    console.info('onConfirmDelete');
+
+    const { deleteArticleIfNeeded, article } = this.props;
+    deleteArticleIfNeeded(article._id);
   };
 
+  updatedJSX = () => (
+    <DashView
+      message={'Update article success!'}
+      onDoneClick={this.props.pushDashboard}
+    />
+  );
+
+  deletedJSX = () => (
+    <DashView
+      message={'Delete article success!'}
+      onDoneClick={this.props.pushDashboard}
+    />
+  );
+
+  notFoundJSX = () => (
+    <DashView
+      message={'Article not found!'}
+      onDoneClick={this.props.pushDashboard}
+    />
+  );
+
   contentJSX = () => {
-    const { article } = this.props;
+    const { article, updateArticle, onUpdateArticleClear, deleteArticle, onDeleteArticleClear } = this.props;
     return (
       <div style={{maxWidth: 600, margin: 'auto'}}>
         <h1>Update Article</h1>
@@ -101,16 +125,40 @@ class UpdateArticleView extends Component {
             />
           </div>
 
+          <Snackbar
+            open={updateArticle.error !== null}
+            message={errorMessage(updateArticle.error)}
+            autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
+            onRequestClose={onUpdateArticleClear}
+          />
+
         </Formsy>
+
+        <hr/>
+        <h1>Delete this article</h1>
+
+        <ConfirmButton
+          label='Delete'
+          confirmLabel='Confirm delete this article.'
+          onConfirm={this.onConfirmDelete}
+        />
+
+        <Snackbar
+          open={deleteArticle.error !== null}
+          message={errorMessage(deleteArticle.error)}
+          autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
+          onRequestClose={onDeleteArticleClear}
+        />
+
       </div>
     )
   };
 
   render() {
-    const { article } = this.props;
-    return !article
-      ? this.notFoundJSX()
-      : this.contentJSX();
+    const { article, deleteArticle, updateArticle } = this.props;
+    if (updateArticle.value) { return this.updatedJSX() }
+    if (deleteArticle.value) { return this.deletedJSX() }
+    return !article ? this.notFoundJSX() : this.contentJSX();
   }
 }
 
@@ -119,8 +167,16 @@ export default connect(
     const { _id } = ownProps.params;
     const article = state.article.articles.get(_id);
     return {
-      article
+      article,
+      updateArticle: state.updateArticle,
+      deleteArticle: state.deleteArticle,
     }
   },
-  ({updateArticleIfNeeded, pushDashboard})
+  ({
+    updateArticleIfNeeded,
+    pushDashboard,
+    onUpdateArticleClear,
+    deleteArticleIfNeeded,
+    onDeleteArticleClear
+  })
 )(UpdateArticleView);
