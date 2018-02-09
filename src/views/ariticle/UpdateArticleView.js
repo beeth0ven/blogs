@@ -26,9 +26,9 @@ class UpdateArticleView extends Component {
     this.state = { editorState };
   }
 
-  componentDidMount() {
-    console.info('UpdateArticleView componentDidMount');
-    const { article, pushArticleNotFound, params } = this.props;
+  componentWillReceiveProps(nextProps) {
+    console.info('UpdateArticleView componentWillReceiveProps');
+    const { article, pushArticleNotFound, params } = nextProps;
     const notFound = !article;
     if (notFound) pushArticleNotFound(params._id);
   }
