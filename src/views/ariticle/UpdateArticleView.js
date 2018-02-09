@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {RaisedButton, Snackbar} from "material-ui";
-import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
-import {pushDashboard} from "../../actions/router";
+import {pushArticleNotFound} from "../../actions/router";
 import {EditorState} from "draft-js";
-import Formsy from 'formsy-react';
-import DefaultInput from "../../components/DefaultInput";
-import ContentEditor from "../../components/article/ContentEditor";
 import {contentRawFromEditorState, editorStateFromContentRaw} from "../../libaries/public/draft";
 import {onUpdateArticleClear, updateArticleIfNeeded} from "../../actions/updateArticle";
-import {errorMessage} from "../../libaries/public/error";
 import {deleteArticleIfNeeded, onDeleteArticleClear} from "../../actions/deleteArticle";
-import DashView from "../DashView";
-import ConfirmButton from "../../components/ConfirmButton";
+import UpdateArticleForm from "../../components/article/UpdateArticleForm";
+import DeleteArticleForm from "../../components/article/DeleteArticleForm";
+import {Snackbar} from "material-ui";
+import {errorMessage} from "../../libaries/public/error";
+import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 
 class UpdateArticleView extends Component {
 
@@ -29,31 +26,33 @@ class UpdateArticleView extends Component {
     this.state = { editorState };
   }
 
-  componentWillUnmount() {
-    const { onUpdateArticleClear, onDeleteArticleClear } = this.props;
-    onUpdateArticleClear();
-    onDeleteArticleClear();
+  componentDidMount() {
+    console.info('UpdateArticleView componentDidMount');
+    const { article, pushArticleNotFound, params } = this.props;
+    const notFound = !article;
+    if (notFound) pushArticleNotFound(params._id);
   }
 
   onSubmit = (formInfo) => {
-    console.info('formInfo', formInfo);
 
-    const { updateArticleIfNeeded, article } = this.props;
-    const { editorState } = this.state;
-
-    const _id = article._id;
-    const contentRaw = contentRawFromEditorState(editorState);
+    const { updateArticleIfNeeded } = this.props;
+    const remainArticleInfo = this.remainArticleInfo();
 
     const articleInfo = {
-      _id,
       ...formInfo,
-      contentRaw
+      ...remainArticleInfo
     };
 
     console.info('articleInfo', articleInfo);
-
     updateArticleIfNeeded(articleInfo);
+  };
 
+  remainArticleInfo = () => {
+    const { article } = this.props;
+    const { editorState } = this.state;
+    const _id = article._id;
+    const contentRaw = contentRawFromEditorState(editorState);
+    return {_id, contentRaw}
   };
 
   onEditorStateChange = (editorState) => {
@@ -62,85 +61,36 @@ class UpdateArticleView extends Component {
 
   onConfirmDelete = () => {
     console.info('onConfirmDelete');
-
     const { deleteArticleIfNeeded, article } = this.props;
     deleteArticleIfNeeded(article._id);
   };
 
-  updatedJSX = () => (
-    <DashView
-      message={'Update article success!'}
-      onDoneClick={this.props.pushDashboard}
-    />
-  );
-
-  deletedJSX = () => (
-    <DashView
-      message={'Delete article success!'}
-      onDoneClick={this.props.pushDashboard}
-    />
-  );
-
-  notFoundJSX = () => (
-    <DashView
-      message={'Article not found!'}
-      onDoneClick={this.props.pushDashboard}
-    />
-  );
-
-  contentJSX = () => {
+  render() {
     const { article, updateArticle, onUpdateArticleClear, deleteArticle, onDeleteArticleClear } = this.props;
+    const { editorState } = this.state;
+    if (!article) return <h3>Loading</h3>;
     return (
       <div style={{maxWidth: 600, margin: 'auto'}}>
         <h1>Update Article</h1>
-        <Formsy onSubmit={this.onSubmit}>
-
-          <DefaultInput
-            title='Title'
-            name='title'
-            type='text'
-            initialValue={article.title}
-            required
-          />
-
-          <DefaultInput
-            title='Content'
-            name='content'
-            type='text'
-            initialValue={article.content}
-            required
-          />
-
-          <ContentEditor
-            editorState={this.state.editorState}
-            onEditorStateChange={this.onEditorStateChange}
-          />
-
-          <div style={{marginTop: 24}}>
-            <RaisedButton
-              label='Update article'
-              type='submit'
-              style={{ width: 200, display: 'block', margin: 'auto' }}
-              secondary
-            />
-          </div>
-
-          <Snackbar
-            open={updateArticle.error !== null}
-            message={errorMessage(updateArticle.error)}
-            autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
-            onRequestClose={onUpdateArticleClear}
-          />
-
-        </Formsy>
+        <UpdateArticleForm
+          article={article}
+          editorState={editorState}
+          onEditorStateChange={this.onEditorStateChange}
+          onSubmit={this.onSubmit}
+        />
 
         <hr/>
-        <h1>Delete this article</h1>
 
-        <ConfirmButton
-          label='Delete'
-          confirmLabel='Confirm delete this article.'
-          onConfirm={this.onConfirmDelete}
+        <h1>Delete this article</h1>
+        <DeleteArticleForm
+          onConfirmDelete={this.onConfirmDelete}
+        />
+
+        <Snackbar
+          open={updateArticle.error !== null}
+          message={errorMessage(updateArticle.error)}
+          autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
+          onRequestClose={onUpdateArticleClear}
         />
 
         <Snackbar
@@ -152,31 +102,20 @@ class UpdateArticleView extends Component {
 
       </div>
     )
-  };
-
-  render() {
-    const { article, deleteArticle, updateArticle } = this.props;
-    if (updateArticle.value) { return this.updatedJSX() }
-    if (deleteArticle.value) { return this.deletedJSX() }
-    return !article ? this.notFoundJSX() : this.contentJSX();
   }
 }
 
 export default connect(
-  (state, ownProps) => {
-    const { _id } = ownProps.params;
-    const article = state.article.articles.get(_id);
-    return {
-      article,
-      updateArticle: state.updateArticle,
-      deleteArticle: state.deleteArticle,
-    }
-  },
+  (state, ownProps) => ({
+    article: state.article.articles.get(ownProps.params._id),
+    updateArticle: state.updateArticle,
+    deleteArticle: state.deleteArticle,
+  }),
   ({
     updateArticleIfNeeded,
-    pushDashboard,
     onUpdateArticleClear,
     deleteArticleIfNeeded,
-    onDeleteArticleClear
+    onDeleteArticleClear,
+    pushArticleNotFound,
   })
 )(UpdateArticleView);

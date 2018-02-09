@@ -42,13 +42,13 @@ class CommonReducerBuilder {
       case this.ON_SUCCESS:
         return {
           value: action.data,
-          isExecuting: true,
+          isExecuting: false,
           error: null
         };
       case this.ON_ERROR:
         return {
           value: null,
-          isExecuting: true,
+          isExecuting: false,
           error: action.error
         };
       case this.ON_CLEAR:

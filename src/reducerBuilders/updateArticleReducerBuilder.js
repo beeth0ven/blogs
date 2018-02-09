@@ -1,4 +1,4 @@
-import CommonReducerBuilder from "../libaries/public/CommonReducerBuilder";
+import CommonReducerBuilder from "../libaries/public/reducerBuilder/CommonReducerBuilder";
 
 const updateArticleReducerBuilder = new CommonReducerBuilder({
   path: 'updateArticle',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 // import {EditorState} from "draft-js";
-import {RaisedButton} from "material-ui";
+import {RaisedButton, Snackbar} from "material-ui";
 import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
 import ContentEditor from "../../components/article/ContentEditor";
@@ -11,6 +11,7 @@ import {errorMessage} from "../../libaries/public/error";
 import {pushDashboard} from "../../actions/router";
 import PromiseSnackbar from "../../components/PromiseSnackbar";
 import {EditorState} from "draft-js";
+import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 
 
 class NewArticleView extends Component {
@@ -86,13 +87,11 @@ class NewArticleView extends Component {
             />
           </div>
 
-          <PromiseSnackbar
-            error={error}
-            errorMessage={errorMessage(error)}
-            onRequestErrorClose={onNewArticleClear}
-            value={value}
-            valueMessage={`Article saved with id: ${value}`}
-            onRequestValueClose={this.pushDashboard}
+          <Snackbar
+            open={error !== null}
+            message={errorMessage(error)}
+            autoHideDuration={DEFAULT_AUTO_HIDE_DURATION}
+            onRequestClose={onNewArticleClear}
           />
 
         </Formsy>

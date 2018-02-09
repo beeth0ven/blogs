@@ -1,6 +1,6 @@
 
 
-import CommonReducerBuilder from "../src/libaries/public/CommonReducerBuilder";
+import CommonReducerBuilder from "../src/libaries/public/reducerBuilder/CommonReducerBuilder";
 
 describe('ReducerBuild', () => {
   it('should test ReducerBuild', () => {

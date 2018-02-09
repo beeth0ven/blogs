@@ -7,7 +7,6 @@ import {errorMessage} from "../libaries/public/error";
 import {pushDashboard} from "../actions/router";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../config";
 
-
 const LoginView = ({ user, error, loginIfNeeded, onLoginClear, pushDashboard }) => (
   <div>
     <div style={{ maxWidth: 450, margin: '0 auto' }}>

@@ -2,6 +2,7 @@
 import newArticleReducerBuilder from "../reducerBuilders/newArticleReducerBuilder";
 import falcorModel from '../services/falcorModel';
 import {onAddedArticle} from "./article";
+import {pushNewArticleSuccess} from "./router";
 
 const { onExecuting, onSuccess, onError, onClear } = newArticleReducerBuilder.createActions();
 
@@ -17,7 +18,8 @@ const saveNewArticleIfNeeded = (articleInfo) => async (dispatch, getState) => {
       _id: newArticleId
     };
     dispatch(onSuccess(newArticleId));
-    dispatch(onAddedArticle(newArticleObject))
+    dispatch(onAddedArticle(newArticleObject));
+    dispatch(pushNewArticleSuccess())
   } catch (error) {
     dispatch(onError(error));
   }
