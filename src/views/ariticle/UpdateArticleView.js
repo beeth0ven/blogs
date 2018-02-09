@@ -16,15 +16,19 @@ class UpdateArticleView extends Component {
   constructor(props) {
     super(props);
 
-    const { article } = props;
-    const hasContent = (article && article.contentRaw);
-
-    const editorState = hasContent
-      ? editorStateFromContentRaw(article.contentRaw)
-      : EditorState.createEmpty();
-
+    const editorState = this.initialEditorState();
     this.state = { editorState };
   }
+
+  initialEditorState = () => {
+    console.info('UpdateArticleView initialEditorState');
+    const { article } = this.props;
+    const hasContent = (article && article.contentRaw);
+
+    return hasContent
+      ? editorStateFromContentRaw(article.contentRaw)
+      : EditorState.createEmpty();
+  };
 
   componentWillReceiveProps(nextProps) {
     console.info('UpdateArticleView componentWillReceiveProps');
