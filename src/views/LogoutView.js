@@ -13,10 +13,7 @@ class LogoutView extends Component {
   render() {
 
     return (
-      <div style={{
-        width: 300,
-        margin: '0 auto'
-      }}>
+      <div style={{ width: 300, margin: '0 auto' }}>
         <h3>Logout success!</h3>
         <Link to='/'>
           <RaisedButton

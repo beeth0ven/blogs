@@ -1,6 +1,7 @@
 import { Model } from 'falcor';
 import FalcorHttpDataSource from 'falcor-http-datasource';
 import * as localStorageService from "./localStorageService";
+import {BASE_URL} from "../config";
 
 class AppHttpDataSource extends FalcorHttpDataSource {
 
@@ -15,7 +16,7 @@ class AppHttpDataSource extends FalcorHttpDataSource {
 }
 
 export default new Model({
-  source: new AppHttpDataSource('http://localhost:3000/model.json', {
+  source: new AppHttpDataSource(`${BASE_URL}/model.json`, {
     crossDomain: true
   })
 });
