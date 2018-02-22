@@ -15,6 +15,9 @@ module.exports = {
   devServer: {
     contentBase: './dist'
   },
+  plugins: [
+    new UglifyJSPlugin()
+  ],
   module: {
     rules: [
       {
@@ -32,8 +35,5 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: [
-    new UglifyJSPlugin()
-  ]
+  }
 };

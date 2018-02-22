@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack; node server",
     "server": "node server",
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --https",
     "webpack": "webpack",
     "test": "jest",
     "test:watch": "npm test -- --watch",
