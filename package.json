@@ -9,7 +9,8 @@
     "dev": "webpack-dev-server",
     "webpack": "webpack",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "deploy": "aws s3 sync ./dist s3://beeth0ven.cf --acl public-read"
   },
   "repository": {
     "type": "git",
@@ -56,6 +57,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "jest": "^22.1.4",
+    "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   }
