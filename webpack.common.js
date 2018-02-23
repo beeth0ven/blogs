@@ -1,5 +1,4 @@
 const path = require('path');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -11,13 +10,6 @@ module.exports = {
     filename: "index.js",
     publicPath: "/"
   },
-  devtool: "inline-source-map",
-  devServer: {
-    contentBase: './dist'
-  },
-  plugins: [
-    new UglifyJSPlugin()
-  ],
   module: {
     rules: [
       {
