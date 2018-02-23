@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Popover, RaisedButton} from "material-ui";
+import Popover from "material-ui/Popover";
+import RaisedButton from "material-ui/RaisedButton";
 
 class ConfirmButton extends Component {
 

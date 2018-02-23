@@ -1,5 +1,6 @@
 import React from 'react';
-import {Paper, RaisedButton} from "material-ui";
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
 import DefaultInput from "./DefaultInput";
 import Formsy from 'formsy-react';
 

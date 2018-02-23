@@ -1,6 +1,9 @@
 import React from 'react'
 import {connect} from "react-redux";
-import {Avatar, List, ListItem, RaisedButton} from "material-ui";
+import Avatar from "material-ui/Avatar";
+import List from "material-ui/List/List";
+import ListItem from "material-ui/List/ListItem";
+import RaisedButton from "material-ui/RaisedButton";
 import {DEFAULT_ARTICLE_IMAGE} from "../config";
 import {newArrayFromMap} from "../libaries/public/map";
 import {Link} from "react-router";

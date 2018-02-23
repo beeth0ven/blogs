@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import RegisterForm from "../components/RegisterForm";
 import {connect} from "react-redux";
 import {onRegisterClear, registerIfNeeded} from "../actions/register";
-import {Snackbar} from "material-ui";
+import Snackbar from "material-ui/Snackbar";
 import {errorMessage} from "../libaries/public/error";
 import {pushLogin} from "../actions/router";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../config";

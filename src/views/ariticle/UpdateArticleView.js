@@ -7,7 +7,7 @@ import {onUpdateArticleClear, updateArticleIfNeeded} from "../../actions/updateA
 import {deleteArticleIfNeeded, onDeleteArticleClear} from "../../actions/deleteArticle";
 import UpdateArticleForm from "../../components/article/UpdateArticleForm";
 import DeleteArticleForm from "../../components/article/DeleteArticleForm";
-import {Snackbar} from "material-ui";
+import Snackbar from "material-ui/Snackbar";
 import {errorMessage} from "../../libaries/public/error";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 

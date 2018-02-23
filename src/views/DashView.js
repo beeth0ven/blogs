@@ -1,5 +1,5 @@
 import React from 'react'
-import {RaisedButton} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 
 const DashView = ({message, onDoneClick}) => (
   <div style={{ width: 300, margin: '0 auto' }}>

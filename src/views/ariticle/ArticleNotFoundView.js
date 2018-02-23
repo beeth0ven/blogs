@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Link} from "react-router";
-import {RaisedButton} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 
 const ArticleNotFoundView = ({params}) => (
   <div style={{width: 300, margin: 'auto'}}>

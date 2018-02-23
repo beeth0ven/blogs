@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {AppBar, RaisedButton} from "material-ui";
+import AppBar from "material-ui/AppBar";
+import RaisedButton from "material-ui/RaisedButton";
 import {Link} from "react-router";
-import {ActionHome} from "material-ui/svg-icons/index.es";
+import ActionHome from "material-ui/svg-icons/action/home";
 import {connect} from "react-redux";
 import {pullLoginStateFromLocalStorage} from "../actions/login";
 

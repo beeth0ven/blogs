@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Link} from "react-router";
-import {RaisedButton} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 import {connect} from "react-redux";
 import {logoutIfNeeded} from "../actions/login";
 

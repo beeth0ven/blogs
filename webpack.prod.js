@@ -16,7 +16,8 @@ module.exports = merge(common, {
       }
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.SERVICE_URL': JSON.stringify('https://home.beeth0ven.cf:3000')
     }),
     new BundleAnalyzerPlugin(),
   ]

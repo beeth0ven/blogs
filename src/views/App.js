@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {fetchArticles, onFetchArticlesClear} from "../actions/article";
 import {newArrayFromMap} from "../libaries/public/map";
-import {Card, CardMedia, CardTitle, Snackbar} from "material-ui";
+import Card from "material-ui/Card/Card";
+import CardMedia from "material-ui/Card/CardMedia";
+import CardTitle from "material-ui/Card/CardTitle";
+import Snackbar from "material-ui/Snackbar";
 import {errorMessage} from "../libaries/public/error";
 import {DEFAULT_AUTO_HIDE_DURATION, DEFAULT_ARTICLE_IMAGE} from "../config";
 
