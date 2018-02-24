@@ -9,7 +9,7 @@ import {contentRawFromEditorState} from "../../libaries/public/draft";
 import {onNewArticleClear, saveNewArticleIfNeeded} from "../../actions/newArticle";
 import {errorMessage} from "../../libaries/public/error";
 import {pushDashboard} from "../../actions/router";
-import {EditorState} from "draft-js";
+import {EditorState} from "draft-js/lib/Draft";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 
 

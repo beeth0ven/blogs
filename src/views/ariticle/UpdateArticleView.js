@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {pushArticleNotFound} from "../../actions/router";
-import {EditorState} from "draft-js";
+import {EditorState} from "draft-js/lib/Draft";
 import {contentRawFromEditorState, editorStateFromContentRaw} from "../../libaries/public/draft";
 import {onUpdateArticleClear, updateArticleIfNeeded} from "../../actions/updateArticle";
 import {deleteArticleIfNeeded, onDeleteArticleClear} from "../../actions/deleteArticle";
