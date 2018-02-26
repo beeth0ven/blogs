@@ -13,6 +13,7 @@ app.use(corsService);
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/model.json', falcorRouteService);
+app.use('/static', express.static('dist'));
 
 connectMongoose();
 // app.listen(PORT, () => console.info('Start listen on:', PORT));
