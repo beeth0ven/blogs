@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {pushArticleNotFound} from "../../actions/router";
-import {EditorState} from "draft-js";
+import {EditorState} from "draft-js/lib/Draft";
 import {contentRawFromEditorState, editorStateFromContentRaw} from "../../libaries/public/draft";
 import {onUpdateArticleClear, updateArticleIfNeeded} from "../../actions/updateArticle";
 import {deleteArticleIfNeeded, onDeleteArticleClear} from "../../actions/deleteArticle";
 import UpdateArticleForm from "../../components/article/UpdateArticleForm";
 import DeleteArticleForm from "../../components/article/DeleteArticleForm";
-import {Snackbar} from "material-ui";
+import Snackbar from "material-ui/Snackbar";
 import {errorMessage} from "../../libaries/public/error";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 

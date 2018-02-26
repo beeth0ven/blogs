@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {Menu, MenuItem, Popover, RaisedButton} from "material-ui";
+import Menu from "material-ui/Menu";
+import MenuItem from "material-ui/MenuItem";
+import Popover from "material-ui/Popover";
+import RaisedButton from "material-ui/RaisedButton";
 
 class TestView extends Component {
 

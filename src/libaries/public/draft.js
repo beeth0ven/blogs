@@ -1,4 +1,4 @@
-import {convertToRaw, convertFromRaw, ContentState, EditorState} from 'draft-js';
+import {convertToRaw, convertFromRaw, EditorState} from 'draft-js/lib/Draft';
 
 const contentRawFromEditorState = (editorState) => {
   const content = editorState.getCurrentContent();

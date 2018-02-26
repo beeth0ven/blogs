@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import {onDeleteArticleClear} from "../../actions/deleteArticle";
 import {Link} from "react-router";
-import {RaisedButton} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 
 class DeleteArticleSuccessView extends Component {
 

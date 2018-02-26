@@ -1,6 +1,6 @@
 import React from 'react';
 import {DEFAULT_AUTO_HIDE_DURATION} from "../config";
-import {Snackbar} from "material-ui";
+import Snackbar from "material-ui/Snackbar";
 
 const PromiseSnackbar = (
   {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import {onUpdateArticleClear} from "../../actions/updateArticle";
 import {Link} from "react-router";
-import {RaisedButton} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 
 class UpdateArticleSuccessView extends Component {
 

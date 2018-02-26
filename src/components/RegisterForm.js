@@ -1,6 +1,7 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import {Paper, RaisedButton} from "material-ui";
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
 import DefaultInput from "./DefaultInput";
 
 const RegisterForm = ({ onSubmit }) => (

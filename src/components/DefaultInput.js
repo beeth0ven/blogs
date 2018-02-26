@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withFormsy } from 'formsy-react';
-import {TextField} from "material-ui";
+import TextField from "material-ui/TextField";
 
 class DefaultInput extends Component {
 

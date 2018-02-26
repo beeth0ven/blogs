@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import LoginForm from "../components/LoginForm";
 import {loginIfNeeded, onLoginClear} from "../actions/login";
-import {Snackbar} from "material-ui";
+import Snackbar from "material-ui/Snackbar";
 import {errorMessage} from "../libaries/public/error";
 import {pushDashboard} from "../actions/router";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../config";

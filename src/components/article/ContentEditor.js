@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import editorStyles from "./EditorStyles";
-import {Editor} from "draft-js";
+import {Editor} from "draft-js/lib/Draft";
 
 class ContentEditor extends Component {
 

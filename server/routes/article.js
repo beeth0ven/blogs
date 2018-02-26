@@ -37,54 +37,60 @@ const article = (request, response) => {
   return  [
     {
       route: 'articles.length',
-      get: async () => await withAuthorization({
-          path: ['articles', 'length'],
-          bearerToken,
-          asyncTry: async ({ username, role }) => {
-            const count = await Article.count();
-            return {
-              path: ['articles', 'length'],
-              value: count
-            };
-          },
-          catchError: error => "can't get article's length, please try again."
-        })
+      get: async () => {
+        try {
+          const count = await Article.count();
+          return {
+            path: ['articles', 'length'],
+            value: count
+          };
+        } catch (error) {
+          return {
+            path: ['articles', 'length'],
+            value: $error("can't get article's length, please try again.")
+          };
+        }
+      }
     },
     {
       route: 'articles[{integers}]',
-      get: async (pathSet) => await withAuthorization({
-          path: ['articles'],
-          bearerToken,
-          asyncTry: async ({ username, role }) => {
-            const indices = pathSet[1];
-            const articles = await Article.find({}, '_id');
-            return indices.map(index => ({
-              path: ['articles', index],
-              value: $ref(['articlesById', articles[index]._id.toString()])
-            }))
-          },
-          catchError: error => "can't get articles, please try again."
-        })
+      get: async (pathSet) => {
+        try {
+          const indices = pathSet[1];
+          const articles = await Article.find({}, '_id');
+          return indices.map(index => ({
+            path: ['articles', index],
+            value: $ref(['articlesById', articles[index]._id.toString()])
+          }))
+        } catch (error) {
+          return {
+            path: ['articles'],
+            value: $error("can't get articles, please try again.")
+          };
+        }
+      }
     },
     {
       route: 'articlesById[{keys}]["_id", "title", "content", "contentRaw"]',
-      get: async (pathSet) => await withAuthorization({
-          path: ['articlesById'],
-          bearerToken,
-          asyncTry: async ({ username, role }) => {
-            const _ids = pathSet[1];
-            const articles = await Article.find({ _id: { $in: _ids } });
-            return articles.map(article => {
-              const articleObject = article.toObject();
-              articleObject.contentRaw = $atom(articleObject.contentRaw);
-              return {
-                path: ['articlesById', articleObject._id.toString()],
-                value: articleObject
-              }
-            })
-          },
-          catchError: error => "can't get articles, please try again."
-        })
+      get: async (pathSet) => {
+        try {
+          const _ids = pathSet[1];
+          const articles = await Article.find({ _id: { $in: _ids } });
+          return articles.map(article => {
+            const articleObject = article.toObject();
+            articleObject.contentRaw = $atom(articleObject.contentRaw);
+            return {
+              path: ['articlesById', articleObject._id.toString()],
+              value: articleObject
+            }
+          })
+        } catch (error) {
+          return {
+            path: ['articlesById'],
+            value: $error("can't get articles, please try again.")
+          };
+        }
+      }
     },
     {
       route: 'article.new',

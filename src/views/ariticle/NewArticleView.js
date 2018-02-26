@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-// import {EditorState} from "draft-js";
-import {RaisedButton, Snackbar} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
+import Snackbar from "material-ui/Snackbar";
 import Formsy from 'formsy-react';
 import DefaultInput from "../../components/DefaultInput";
 import ContentEditor from "../../components/article/ContentEditor";
@@ -9,8 +9,7 @@ import {contentRawFromEditorState} from "../../libaries/public/draft";
 import {onNewArticleClear, saveNewArticleIfNeeded} from "../../actions/newArticle";
 import {errorMessage} from "../../libaries/public/error";
 import {pushDashboard} from "../../actions/router";
-import PromiseSnackbar from "../../components/PromiseSnackbar";
-import {EditorState} from "draft-js";
+import {EditorState} from "draft-js/lib/Draft";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
 
 
@@ -52,7 +51,7 @@ class NewArticleView extends Component {
   };
 
   render() {
-    const { value, error, onNewArticleClear } = this.props;
+    const { error, onNewArticleClear } = this.props;
 
     return (
       <div style={{maxWidth: 600, margin: 'auto'}}>

@@ -1,9 +1,7 @@
 import React from 'react';
 import ContentEditor from "./ContentEditor";
 import DefaultInput from "../DefaultInput";
-import {errorMessage} from "../../libaries/public/error";
-import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
-import {RaisedButton, Snackbar} from "material-ui";
+import RaisedButton from "material-ui/RaisedButton";
 import Formsy from 'formsy-react';
 
 const UpdateArticleForm = ({article, editorState, onEditorStateChange, onSubmit, }) => (
