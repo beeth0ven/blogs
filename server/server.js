@@ -1,5 +1,5 @@
 import express from 'express';
-import { PORT } from './config';
+import {PORT, SSL_CERT_PATH, SSL_KEY_PATH} from './config';
 import corsService from "./services/corsService";
 import falcorRouteService from "./services/falcorRouteService";
 import connectMongoose from "./services/mongooseService/index";
@@ -18,8 +18,8 @@ connectMongoose();
 // app.listen(PORT, () => console.info('Start listen on:', PORT));
 
 const httpsOptions = {
-  key: fs.readFileSync('./cert/key.pem'),
-  cert: fs.readFileSync('./cert/cert.pem')
+  key: fs.readFileSync(SSL_KEY_PATH),
+  cert: fs.readFileSync(SSL_CERT_PATH)
 };
 
 const server = https.createServer(httpsOptions, app)

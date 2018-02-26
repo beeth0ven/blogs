@@ -26,6 +26,8 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
+    "dotenv": "^5.0.0",
+    "dotenv-webpack": "^1.5.4",
     "draft-js": "^0.10.5",
     "express": "^4.16.2",
     "falcor": "^1.0.3",
