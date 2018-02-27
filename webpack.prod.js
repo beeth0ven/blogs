@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(common, {
@@ -16,6 +16,6 @@ module.exports = merge(common, {
       }
     }),
     new Dotenv({ path: './src/.env' }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(), // It shows the size of module
   ]
 });

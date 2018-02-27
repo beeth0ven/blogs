@@ -4,7 +4,7 @@
   "description": "Blogs version 2.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack; node server",
+    "start": "build; node server",
     "server": "node server",
     "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/beeth0ven/blogs#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
     "cors": "^2.8.4",
     "dotenv": "^5.0.0",
     "dotenv-webpack": "^1.5.4",
