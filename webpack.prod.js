@@ -1,8 +1,8 @@
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(common, {
   devtool: 'source-map',
@@ -15,10 +15,7 @@ module.exports = merge(common, {
         }
       }
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.SERVICE_URL': JSON.stringify('https://home.beeth0ven.cf:3000')
-    }),
-    new BundleAnalyzerPlugin(),
+    new Dotenv({ path: './src/.env' }),
+    // new BundleAnalyzerPlugin(), // It shows the size of module
   ]
 });

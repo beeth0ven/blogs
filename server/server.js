@@ -1,28 +1,25 @@
 import express from 'express';
-import { PORT } from './config';
+import compression from 'compression';
 import corsService from "./services/corsService";
 import falcorRouteService from "./services/falcorRouteService";
 import connectMongoose from "./services/mongooseService/index";
 import bodyParser from 'body-parser';
-import https from 'https';
-import fs from 'fs';
+import {createServer} from "./createServer";
+import {graphiqlService, graphqlService} from "./services/graphqlService";
 
 const app = express();
 
+app.use(compression());
 app.use(corsService);
 app.use(bodyParser.json({extended: false}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/model.json', falcorRouteService);
+app.use('/graphql', graphqlService);
+app.use('/graphiql', graphiqlService);
+app.use('/static', express.static('dist'));
 
 connectMongoose();
-// app.listen(PORT, () => console.info('Start listen on:', PORT));
 
-const httpsOptions = {
-  key: fs.readFileSync('./cert/key.pem'),
-  cert: fs.readFileSync('./cert/cert.pem')
-};
-
-const server = https.createServer(httpsOptions, app)
-  .listen(PORT, () => console.info('Start listen on:', PORT));
+const server = createServer(app);
 
 export default server;

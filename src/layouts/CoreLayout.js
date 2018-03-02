@@ -5,11 +5,13 @@ import {Link} from "react-router";
 import ActionHome from "material-ui/svg-icons/action/home";
 import {connect} from "react-redux";
 import {pullLoginStateFromLocalStorage} from "../actions/login";
+import {client} from "../services/falcorModel";
+import gql from 'graphql-tag';
 
 class CoreLayout extends Component {
 
   componentDidMount() {
-    this.props.pullLoginStateFromLocalStorage()
+    this.props.pullLoginStateFromLocalStorage();
   }
 
   styles = {

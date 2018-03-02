@@ -1,6 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules/
 dist/index.js
+dist/index.js.map
 npm-debug.log
 .idea/
 *.pem
+server/.env
