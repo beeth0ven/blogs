@@ -6,7 +6,7 @@ import connectMongoose from "./services/mongooseService/index";
 import bodyParser from 'body-parser';
 import {createServer} from "./createServer";
 import {graphiqlService, graphqlService} from "./services/graphqlService";
-import {testMinio} from "./services/s3Service";
+import {s3Service} from "./services/s3Service";
 
 const app = express();
 
@@ -17,12 +17,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/model.json', falcorRouteService);
 app.use('/graphql', graphqlService);
 app.use('/graphiql', graphiqlService);
+app.use('/s3', s3Service);
 app.use('/static', express.static('dist'));
 
 connectMongoose();
 
 const server = createServer(app);
-
-testMinio();
 
 export default server;
