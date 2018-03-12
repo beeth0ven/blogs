@@ -11,6 +11,7 @@ import {errorMessage} from "../../libaries/public/error";
 import {pushDashboard} from "../../actions/router";
 import {EditorState} from "draft-js/lib/Draft";
 import {DEFAULT_AUTO_HIDE_DURATION} from "../../config";
+import ReactS3Uploader from 'react-s3-uploader';
 
 
 class NewArticleView extends Component {
@@ -75,6 +76,25 @@ class NewArticleView extends Component {
           <ContentEditor
             editorState={this.state.editorState}
             onEditorStateChange={this.onEditorStateChange}
+          />
+
+          <ReactS3Uploader
+            server='https://localhost:3000'
+            signingUrl='/s3/sign'
+            accept='image/*'
+            onProgress={(progressInPercent, uploadStatusText) => {
+              console.log('onProgress');
+              console.log('progressInPercent', progressInPercent);
+              console.log('uploadStatusText', uploadStatusText);
+            }}
+            onError={(error) => {
+              console.log('onError');
+              console.log('error', error);
+            }}
+            onFinish={(uploadDetails) => {
+              console.log('onFinish');
+              console.log('uploadDetails', uploadDetails);
+            }}
           />
 
           <div style={{marginTop: 24}}>
